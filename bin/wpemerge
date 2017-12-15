@@ -1,0 +1,15 @@
+#!/usr/bin/env php
+<?php
+$autoloaders = [
+	realpath( __DIR__ . '/../vendor/autoload.php' ),
+	realpath( __DIR__ . '/../../../vendor/autoload.php' ),
+];
+
+foreach ( $autoloaders as $autoloader ) {
+	if ( file_exists( $autoloader ) ) {
+		require_once $autoloader;
+		break;
+	}
+}
+
+WPEmerge\Cli\App::run();
