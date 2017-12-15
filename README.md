@@ -1,2 +1,3 @@
-# wpemerge-cli
-CLI tool for WP Emerge.
+# WPEmerge CLI
+
+Refer to http://wpemerge.com/ for more information.
