@@ -17,6 +17,7 @@ use WPEmerge\Cli\Commands\Install;
 use WPEmerge\Cli\Commands\MakeController;
 use WPEmerge\Cli\Commands\MakeFacade;
 use WPEmerge\Cli\Commands\MakeViewComposer;
+use WPEmerge\Cli\Composer\Composer;
 
 class App {
 	/**
@@ -27,9 +28,9 @@ class App {
 	public static function run( Input $input = null, Output $output = null ) {
 		global $argv;
 
-		$composer = static::getComposerJson( WPEMERGE_CLI_DIR );
+		$composer = Composer::getComposerJson( WPEMERGE_CLI_DIR );
 
-		$application = new Application( 'WPEmerge CLI', $composer->version );
+		$application = new Application( 'WPEmerge CLI', $composer['version'] );
 
 		$application->add( new Install() );
 		$application->add( new MakeController() );
@@ -90,39 +91,18 @@ class App {
 	}
 
 	/**
-	 * Load and parse a composer.json file from a directory
-	 *
-	 * @return object|null
-	 */
-	protected static function getComposerJson( $directory ) {
-		$composer_json = $directory . DIRECTORY_SEPARATOR . 'composer.json';
-
-		if ( ! file_exists( $composer_json ) ) {
-			return null;
-		}
-
-		$composer = @json_decode( file_get_contents( $composer_json ) );
-
-		if ( ! $composer ) {
-			return null;
-		}
-
-		return $composer;
-	}
-
-	/**
 	 * Check if a directory is a WordPress theme root
 	 *
 	 * @return boolean
 	 */
 	protected static function isWordPressThemeDirectory( $directory ) {
-		$composer = static::getComposerJson( $directory );
+		$composer = Composer::getComposerJson( $directory );
 
 		if ( ! $composer ) {
 			return false;
 		}
 
-		if ( $composer->type !== 'wordpress-theme' ) {
+		if ( $composer['type'] !== 'wordpress-theme' ) {
 			return false;
 		}
 

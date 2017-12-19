@@ -7,6 +7,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
+use WPEmerge\Cli\Composer\Composer;
 use WPEmerge\Cli\Presets\Bootstrap;
 use WPEmerge\Cli\Presets\Bulma;
 use WPEmerge\Cli\Presets\FontAwesome;
@@ -29,12 +30,32 @@ class Install extends Command {
 	 * {@inheritDoc}
 	 */
 	protected function execute( InputInterface $input, OutputInterface $output ) {
+		$this->removeComposerAuthorInformation( $input, $output );
+		$output->writeln( '' );
 		$this->installCarbonFields( $input, $output );
 		$output->writeln( '' );
 		$this->installCssFramework( $input, $output );
 		$output->writeln( '' );
 		$this->installFontAwesome( $input, $output );
 		$output->writeln( '' );
+	}
+
+	/**
+	 * Remove author information from composer.json
+	 *
+	 * @param  InputInterface  $input
+	 * @param  OutputInterface $output
+	 * @return void
+	 */
+	protected function removeComposerAuthorInformation( InputInterface $input, OutputInterface $output ) {
+		$composer = Composer::getComposerJson( getcwd() );
+
+		unset( $composer['name'] );
+		unset( $composer['description'] );
+		unset( $composer['homepage'] );
+		unset( $composer['authors'] );
+
+		Composer::storeComposerJson( $composer, getcwd() );
 	}
 
 	/**
