@@ -14,6 +14,9 @@ use Symfony\Component\Console\Output\Output;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\ProcessBuilder;
 use WPEmerge\Cli\Commands\Install;
+use WPEmerge\Cli\Commands\MakeController;
+use WPEmerge\Cli\Commands\MakeFacade;
+use WPEmerge\Cli\Commands\MakeViewComposer;
 
 class App {
 	/**
@@ -29,6 +32,9 @@ class App {
 		$application = new Application( 'WPEmerge CLI', $composer->version );
 
 		$application->add( new Install() );
+		$application->add( new MakeController() );
+		$application->add( new MakeFacade() );
+		$application->add( new MakeViewComposer() );
 
 		if ( $input === null ) {
 			$input = new ArgvInput( array_slice( $argv, 0 ) );
