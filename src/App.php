@@ -66,11 +66,6 @@ class App {
 
 		$event->getIO()->write( '' );
 
-		if ( ! $event->getIO()->isInteractive() ) {
-			$event->getIO()->write('<error>Interactive mode is required for the installation process.</error>');
-			return;
-		}
-
 		$process = (new ProcessBuilder())
 			->setTimeout( null )
 			->setPrefix( 'php' )

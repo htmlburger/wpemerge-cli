@@ -4,10 +4,13 @@ namespace WPEmerge\Cli\Commands;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
+use Symfony\Component\Process\Exception\RuntimeException;
 use WPEmerge\Cli\Composer\Composer;
+use WPEmerge\Cli\Helpers\Boolean;
 use WPEmerge\Cli\Presets\Bootstrap;
 use WPEmerge\Cli\Presets\Bulma;
 use WPEmerge\Cli\Presets\FontAwesome;
@@ -23,7 +26,25 @@ class Install extends Command {
 		$this
 			->setName( 'install-theme' )
 			->setDescription( 'Interactively enables theme options.' )
-			->setHelp( 'Provides a number of choices on how to decorate your WP Emerge Theme.' );
+			->setHelp( 'Provides a number of choices on how to decorate your WP Emerge Theme.' )
+			->addOption(
+				'install-carbon-fields',
+				null,
+				InputOption::VALUE_REQUIRED,
+				'Flag whether to install Carbon Fields or not.'
+			)
+			->addOption(
+				'install-css-framework',
+				null,
+				InputOption::VALUE_REQUIRED,
+				'CSS framework to install, if any.'
+			)
+			->addOption(
+				'install-font-awesome',
+				null,
+				InputOption::VALUE_REQUIRED,
+				'Flag whether to install Font Awesome or not.'
+			);
 	}
 
 	/**
@@ -31,13 +52,12 @@ class Install extends Command {
 	 */
 	protected function execute( InputInterface $input, OutputInterface $output ) {
 		$this->removeComposerAuthorInformation( $input, $output );
-		$output->writeln( '' );
-		$this->installCarbonFields( $input, $output );
-		$output->writeln( '' );
-		$this->installCssFramework( $input, $output );
-		$output->writeln( '' );
-		$this->installFontAwesome( $input, $output );
-		$output->writeln( '' );
+
+		$this->maybeInstallCarbonFields( $input, $output );
+
+		$this->maybeInstallCssFramework( $input, $output );
+
+		$this->maybeInstallFontAwesome( $input, $output );
 	}
 
 	/**
@@ -59,46 +79,81 @@ class Install extends Command {
 	}
 
 	/**
-	 * Ask whether to install Carbon Fields
+	 * Maybe install Carbon Fields
+	 *
+	 * @param  InputInterface  $input
+	 * @param  OutputInterface $output
+	 * @return void
+	 */
+	protected function maybeInstallCarbonFields( InputInterface $input, OutputInterface $output ) {
+		$install = $input->getOption( 'install-carbon-fields' );
+
+		if ( $install === null ) {
+			$helper = $this->getHelper( 'question' );
+
+			$question = new ConfirmationQuestion(
+				'Would you like to install Carbon Fields? <info>[y/N]</info> ',
+				false
+			);
+
+			$install = $helper->ask( $input, $output, $question );
+		} else {
+			$install = Boolean::fromString( $install );
+		}
+
+		if ( $install ) {
+			$this->installCarbonFields( $input, $output );
+		}
+	}
+
+	/**
+	 * Install Carbon Fields
 	 *
 	 * @param  InputInterface  $input
 	 * @param  OutputInterface $output
 	 * @return void
 	 */
 	protected function installCarbonFields( InputInterface $input, OutputInterface $output ) {
-		$helper = $this->getHelper( 'question' );
-
-		$question = new ConfirmationQuestion(
-			'Would you like to install Carbon Fields? <info>[y/N]</info> ',
-			false
-		);
-
-		if ( ! $helper->ask( $input, $output, $question ) ) {
-			return;
-		}
-
 		// TODO install carbon fields
+		$output->writeln( '' );
 	}
 
 	/**
-	 * Ask whether to install any CSS framework
+	 * Maybe install any CSS framework
 	 *
 	 * @param  InputInterface  $input
 	 * @param  OutputInterface $output
 	 * @return void
 	 */
-	protected function installCssFramework( InputInterface $input, OutputInterface $output ) {
-		$helper = $this->getHelper( 'question' );
+	protected function maybeInstallCssFramework( InputInterface $input, OutputInterface $output ) {
+		$css_framework = $input->getOption( 'install-css-framework' );
 
-		$question = new ChoiceQuestion(
-			'Please select a CSS framework:',
-			['None', 'Bootstrap', 'Bulma', 'Foundation', 'Tachyons'],
-			0
-		);
+		if ( $css_framework === null ) {
+			$helper = $this->getHelper( 'question' );
 
-		$css_framework = $helper->ask( $input, $output, $question );
+			$question = new ChoiceQuestion(
+				'Please select a CSS framework:',
+				['None', 'Bootstrap', 'Bulma', 'Foundation', 'Tachyons'],
+				0
+			);
 
+			$css_framework = $helper->ask( $input, $output, $question );
+		}
+
+		$this->installCssFramework( $input, $output, $css_framework );
+	}
+
+	/**
+	 * Install any CSS framework
+	 *
+	 * @param  InputInterface  $input
+	 * @param  OutputInterface $output
+	 * @param  string          $css_framework
+	 * @return void
+	 */
+	protected function installCssFramework( InputInterface $input, OutputInterface $output, $css_framework ) {
 		$preset = null;
+
 		switch ( $css_framework ) {
 			case 'None':
 				// nothing to do
@@ -119,6 +174,10 @@ class Install extends Command {
 			case 'Tachyons':
 				$preset = new Tachyons();
 				break;
+
+			default:
+				throw new RuntimeException( 'Unknown css framework selected: ' . $css_framework );
+				break;
 		}
 
 		if ( $preset === null ) {
@@ -129,24 +188,41 @@ class Install extends Command {
 	}
 
 	/**
-	 * Ask whether to install Font Awesome
+	 * Maybe install Font Awesome
+	 *
+	 * @param  InputInterface  $input
+	 * @param  OutputInterface $output
+	 * @return void
+	 */
+	protected function maybeInstallFontAwesome( InputInterface $input, OutputInterface $output ) {
+		$install = $input->getOption( 'install-font-awesome' );
+
+		if ( $install === null ) {
+			$helper = $this->getHelper( 'question' );
+
+			$question = new ConfirmationQuestion(
+				'Would you like to install Font Awesome? <info>[y/N]</info> ',
+				false
+			);
+
+			$install = $helper->ask( $input, $output, $question );
+		} else {
+			$install = Boolean::fromString( $install );
+		}
+
+		if ( $install ) {
+			$this->installFontAwesome( $input, $output );
+		}
+	}
+
+	/**
+	 * Install Font Awesome
 	 *
 	 * @param  InputInterface  $input
 	 * @param  OutputInterface $output
 	 * @return void
 	 */
 	protected function installFontAwesome( InputInterface $input, OutputInterface $output ) {
-		$helper = $this->getHelper( 'question' );
-
-		$question = new ConfirmationQuestion(
-			'Would you like to install Font Awesome? <info>[y/N]</info> ',
-			false
-		);
-
-		if ( ! $helper->ask( $input, $output, $question ) ) {
-			return;
-		}
-
 		$this->installPreset( new FontAwesome(), $output );
 	}
 
