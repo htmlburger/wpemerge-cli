@@ -54,10 +54,13 @@ class Install extends Command {
 		$this->removeComposerAuthorInformation( $input, $output );
 
 		$this->maybeInstallCarbonFields( $input, $output );
+		$output->writeln( '' );
 
 		$this->maybeInstallCssFramework( $input, $output );
+		$output->writeln( '' );
 
 		$this->maybeInstallFontAwesome( $input, $output );
+		$output->writeln( '' );
 	}
 
 	/**
@@ -115,7 +118,6 @@ class Install extends Command {
 	 */
 	protected function installCarbonFields( InputInterface $input, OutputInterface $output ) {
 		// TODO install carbon fields
-		$output->writeln( '' );
 	}
 
 	/**
