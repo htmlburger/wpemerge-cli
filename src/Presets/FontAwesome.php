@@ -2,7 +2,9 @@
 
 namespace WPEmerge\Cli\Presets;
 
-class FontAwesome extends FrontEndPreset {
+class FontAwesome implements PresetInterface {
+	use FrontEndPresetTrait;
+
 	/**
 	 * {@inheritDoc}
 	 */

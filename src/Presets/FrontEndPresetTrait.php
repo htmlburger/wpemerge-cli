@@ -5,7 +5,9 @@ namespace WPEmerge\Cli\Presets;
 use Exception;
 use WPEmerge\Cli\NodePackageManagers\Proxy;
 
-abstract class FrontEndPreset implements PresetInterface {
+trait FrontEndPresetTrait {
+	use StatementAppenderTrait;
+
 	/**
 	 * Install a node package
 	 *
@@ -32,17 +34,9 @@ abstract class FrontEndPreset implements PresetInterface {
 	 * @return void
 	 */
 	protected function addCssVendorImport( $directory, $import ) {
-		$css_path = $directory . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . 'css' . DIRECTORY_SEPARATOR . '_vendor.css';
-		$css = file_get_contents( $css_path );
+		$filepath = implode( DIRECTORY_SEPARATOR, [$directory, 'resources', 'css', '_vendor.css'] );
+		$statement = '@import \'~' . $import . '\';';
 
-		$import = '@import \'~' . $import . '\';';
-		$regex = '~^' . preg_quote( $import, '~' ) . '~m';
-
-		if ( preg_match( $regex, $css ) ) {
-			return; // import statement is already exists
-		}
-
-		$css .= PHP_EOL . $import . PHP_EOL;
-		file_put_contents( $css_path, $css );
+		$this->appendUniqueStatement( $filepath, $statement );
 	}
 }

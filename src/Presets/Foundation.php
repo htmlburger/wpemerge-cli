@@ -2,7 +2,9 @@
 
 namespace WPEmerge\Cli\Presets;
 
-class Foundation extends FrontEndPreset {
+class Foundation implements PresetInterface {
+	use FrontEndPresetTrait;
+
 	/**
 	 * {@inheritDoc}
 	 */

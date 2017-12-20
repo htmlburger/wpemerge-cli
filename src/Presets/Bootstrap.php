@@ -2,7 +2,9 @@
 
 namespace WPEmerge\Cli\Presets;
 
-class Bootstrap extends FrontEndPreset {
+class Bootstrap implements PresetInterface {
+	use FrontEndPresetTrait;
+
 	/**
 	 * {@inheritDoc}
 	 */

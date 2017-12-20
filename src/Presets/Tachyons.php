@@ -2,7 +2,9 @@
 
 namespace WPEmerge\Cli\Presets;
 
-class Tachyons extends FrontEndPreset {
+class Tachyons implements PresetInterface {
+	use FrontEndPresetTrait;
+
 	/**
 	 * {@inheritDoc}
 	 */

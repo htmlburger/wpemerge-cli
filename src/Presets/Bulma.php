@@ -2,7 +2,9 @@
 
 namespace WPEmerge\Cli\Presets;
 
-class Bulma extends FrontEndPreset {
+class Bulma implements PresetInterface {
+	use FrontEndPresetTrait;
+
 	/**
 	 * {@inheritDoc}
 	 */
