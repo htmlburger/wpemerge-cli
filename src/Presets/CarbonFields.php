@@ -36,6 +36,14 @@ class CarbonFields implements PresetInterface {
 		}
 
 		/**
+		 * Copy widget
+		 */
+		copy(
+			implode( DIRECTORY_SEPARATOR, [WPEMERGE_CLI_DIR, 'src', 'CarbonFields', 'Carbon_Rich_Text_Widget.php'] ),
+			implode( DIRECTORY_SEPARATOR, [$directory, 'app', 'src', 'Widgets', 'Carbon_Rich_Text_Widget.php'] )
+		);
+
+		/**
 		 * Copy helper file
 		 */
 		copy(
@@ -46,10 +54,32 @@ class CarbonFields implements PresetInterface {
 		/**
 		 * Require helper file
 		 */
-		$filepath = implode( DIRECTORY_SEPARATOR, [$directory, 'app', 'helpers.php'] );
-		$statement = 'require_once WPMT_APP_HELPERS_DIR . \'carbon-fields.php\';';
+		$helpers_filepath = implode( DIRECTORY_SEPARATOR, [$directory, 'app', 'helpers.php'] );
 
-		$this->appendUniqueStatement( $filepath, $statement );
+		$this->appendUniqueStatement(
+			$helpers_filepath,
+			'require_once WPMT_APP_HELPERS_DIR . \'carbon-fields.php\';'
+		);
+
+		/**
+		 * Add hooks
+		 */
+		$hooks_filepath = implode( DIRECTORY_SEPARATOR, [$directory, 'app', 'hooks.php'] );
+
+		$this->appendUniqueStatement(
+			$hooks_filepath,
+			'add_action( \'after_setup_theme\', \'wpmt_boot_carbon_fields\', 100 );'
+		);
+
+		$this->appendUniqueStatement(
+			$hooks_filepath,
+			'add_action( \'carbon_fields_register_fields\', \'wpmt_boot_carbon_fields_register_fields\' );'
+		);
+
+		$this->appendUniqueStatement(
+			$hooks_filepath,
+			'add_filter( \'carbon_fields_map_field_api_key\', \'wpmt_filter_carbon_fields_google_maps_api_key\' );'
+		);
 
 		return '';
 	}
