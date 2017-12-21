@@ -19,7 +19,7 @@ interface NodePackageManagerInterface {
 	 * @param  string      $package
 	 * @param  string|null $version
 	 * @param  boolean     $dev
-	 * @return void
+	 * @return string
 	 */
 	public function install( $directory, $package, $version = null, $dev = false );
 
@@ -29,7 +29,7 @@ interface NodePackageManagerInterface {
 	 * @param  string  $directory
 	 * @param  string  $package
 	 * @param  boolean $dev
-	 * @return void
+	 * @return string
 	 */
 	public function uninstall( $directory, $package, $dev = false );
 }
