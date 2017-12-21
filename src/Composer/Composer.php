@@ -42,13 +42,11 @@ class Composer {
 	}
 
 	/**
-	 * Install a package
+	 * Check if a package is already installed
 	 *
-	 * @param  string      $directory
-	 * @param  string      $package
-	 * @param  string|null $version
-	 * @param  boolean     $dev
-	 * @return string
+	 * @param  string  $directory
+	 * @param  string  $package
+	 * @return boolean
 	 */
 	public static function installed( $directory, $package ) {
 		$command = 'composer show ' . $package . ' -D';
