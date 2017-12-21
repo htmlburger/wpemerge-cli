@@ -79,13 +79,17 @@ class CarbonFields implements PresetInterface {
 	 * @return array
 	 */
 	protected function getCopyList( $directory ) {
+		$copy_list = [
+			$this->path( WPEMERGE_CLI_DIR, 'src', 'CarbonFields', 'Carbon_Rich_Text_Widget.php' )
+				=> $this->path( $directory, 'app', 'src', 'Widgets', 'Carbon_Rich_Text_Widget.php' ),
+
+			$this->path( WPEMERGE_CLI_DIR, 'src', 'CarbonFields', 'carbon-fields.php' )
+				=> $this->path( $directory, 'app', 'helpers', 'carbon-fields.php' ),
+		];
+
 		$source_dir = $this->path( WPEMERGE_CLI_DIR, 'src', 'CarbonFields', 'carbon-fields' ) . DIRECTORY_SEPARATOR;
 		$destination_dir = $this->path( $directory, 'app', 'setup', 'carbon-fields' ) . DIRECTORY_SEPARATOR;
-		$copy_list = [];
 
-		/**
-		 * Setup files
-		 */
 		$files = scandir( $source_dir );
 		$files = array_filter( $files, function( $file ) {
 			return preg_match( '~\.php$~', $file );
@@ -94,20 +98,6 @@ class CarbonFields implements PresetInterface {
 		foreach ( $files as $file ) {
 			$copy_list[ $source_dir . $file ] = $destination_dir . $file;
 		}
-
-		/**
-		 * Widget
-		 */
-		$copy_list[
-			$this->path( WPEMERGE_CLI_DIR, 'src', 'CarbonFields', 'Carbon_Rich_Text_Widget.php' )
-		] = $this->path( $directory, 'app', 'src', 'Widgets', 'Carbon_Rich_Text_Widget.php' );
-
-		/**
-		 * Helper file
-		 */
-		$copy_list[
-			$this->path( WPEMERGE_CLI_DIR, 'src', 'CarbonFields', 'carbon-fields.php' )
-		] = $this->path( $directory, 'app', 'helpers', 'carbon-fields.php' );
 
 		return $copy_list;
 	}
