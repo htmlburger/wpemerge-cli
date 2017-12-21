@@ -9,8 +9,8 @@ class Composer {
 	/**
 	 * Load and parse a composer.json file from a directory
 	 *
-	 * @param  string      $directory
-	 * @return object|null
+	 * @param  string     $directory
+	 * @return array|null
 	 */
 	public static function getComposerJson( $directory ) {
 		$composer_json = $directory . DIRECTORY_SEPARATOR . 'composer.json';
