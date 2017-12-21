@@ -12,7 +12,7 @@ abstract class Template {
 	 * @param  string $directory
 	 * @return string
 	 */
-	public abstract function create( $name, $directory );
+	abstract public function create( $name, $directory );
 
 	/**
 	 * Store file on disc returning the filepath
