@@ -29,6 +29,11 @@ class Proxy implements NodePackageManagerInterface {
 		return call_user_func_array( [$this->getNodePackageManager(), 'uninstall'], func_get_args() );
 	}
 
+	/**
+	 * Get an instance of the first available package manager
+	 *
+	 * @return NodePackageManagerInterface
+	 */
 	protected function getNodePackageManager() {
 		$node_package_managers = [
 			'yarn' => Yarn::class,
