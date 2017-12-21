@@ -14,7 +14,7 @@ trait FrontEndPresetTrait {
 	 * @param  string      $directory
 	 * @param  string      $package
 	 * @param  string|null $version
-	 * @param  boolean     $version
+	 * @param  boolean     $dev
 	 * @return string
 	 */
 	protected function installNodePackage( $directory, $package, $version = null, $dev = false ) {
