@@ -12,6 +12,7 @@ use Symfony\Component\Console\Input\Input;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\Output;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Process;
 use WPEmerge\Cli\Commands\Install;
 use WPEmerge\Cli\Commands\InstallCarbonFields;
@@ -33,19 +34,7 @@ class App {
 	public static function run( Input $input = null, Output $output = null ) {
 		global $argv;
 
-		$composer = Composer::getComposerJson( WPEMERGE_CLI_DIR );
-
-		$application = new Application( 'WPEmerge CLI', $composer['version'] );
-
-		$application->add( new Install() );
-		$application->add( new InstallCarbonFields() );
-		$application->add( new InstallCleanComposer() );
-		$application->add( new InstallCssFramework() );
-		$application->add( new InstallFontAwesome() );
-		$application->add( new InstallGravityFormsUtilities() );
-		$application->add( new MakeController() );
-		$application->add( new MakeFacade() );
-		$application->add( new MakeViewComposer() );
+		$application = static::create();
 
 		if ( $input === null ) {
 			$input = new ArgvInput( array_slice( $argv, 0 ) );
@@ -60,7 +49,7 @@ class App {
 			return;
 		}
 
-		$output->getFormatter()->setStyle( 'failure', new OutputFormatterStyle( 'red' ) );
+		static::decorateOutput( $output );
 
 		$application->run( $input, $output );
 	}
@@ -90,6 +79,39 @@ class App {
 			$event->getIO()->write( '' );
 			$event->getIO()->write( 'Use <comment>./vendor/bin/' . $binary_name . ' install</comment> instead.' );
 		}
+	}
+
+	/**
+	 * Create the application
+	 *
+	 * @return Application
+	 */
+	public static function create() {
+		$composer = Composer::getComposerJson( WPEMERGE_CLI_DIR );
+
+		$application = new Application( 'WPEmerge CLI', $composer['version'] );
+
+		$application->add( new Install() );
+		$application->add( new InstallCarbonFields() );
+		$application->add( new InstallCleanComposer() );
+		$application->add( new InstallCssFramework() );
+		$application->add( new InstallFontAwesome() );
+		$application->add( new InstallGravityFormsUtilities() );
+		$application->add( new MakeController() );
+		$application->add( new MakeFacade() );
+		$application->add( new MakeViewComposer() );
+
+		return $application;
+	}
+
+	/**
+	 * Decorate output object
+	 *
+	 * @param  OutputInterface $output
+	 * @return void
+	 */
+	protected static function decorateOutput( OutputInterface $output ) {
+		$output->getFormatter()->setStyle( 'failure', new OutputFormatterStyle( 'red' ) );
 	}
 
 	/**
