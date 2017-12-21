@@ -2,7 +2,7 @@
 
 namespace WPEmerge\Cli\NodePackageManagers;
 
-use Symfony\Component\Process\Exception\ProcessFailedException;
+use Symfony\Component\Process\Exception\RuntimeException;
 use WPEmerge\Cli\App;
 
 class Npm implements NodePackageManagerInterface {
@@ -16,7 +16,7 @@ class Npm implements NodePackageManagerInterface {
 		$json = @json_decode( trim( $output ), true );
 
 		if ( ! $json ) {
-			throw new Exception( 'Could not determine if the ' . $package . ' package is already installed.' );
+			throw new RuntimeException( 'Could not determine if the ' . $package . ' package is already installed.' );
 		}
 
 		if ( empty( $json['dependencies'] ) && empty( $json['devDependencies'] ) ) {

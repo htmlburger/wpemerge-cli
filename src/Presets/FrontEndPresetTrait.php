@@ -2,7 +2,7 @@
 
 namespace WPEmerge\Cli\Presets;
 
-use Exception;
+use Symfony\Component\Process\Exception\RuntimeException;
 use WPEmerge\Cli\NodePackageManagers\Proxy;
 
 trait FrontEndPresetTrait {
@@ -21,7 +21,7 @@ trait FrontEndPresetTrait {
 		$package_manager = new Proxy();
 
 		if ( $package_manager->installed( $directory, $package ) ) {
-			throw new Exception( 'Package is already installed.' );
+			throw new RuntimeException( 'Package is already installed.' );
 		}
 
 		return $package_manager->install( $directory, $package, $version, $dev );

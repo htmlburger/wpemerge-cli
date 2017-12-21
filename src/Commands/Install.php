@@ -3,21 +3,16 @@
 namespace WPEmerge\Cli\Commands;
 
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\BufferedOutput;
+use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Process\Exception\RuntimeException;
-use WPEmerge\Cli\Composer\Composer;
 use WPEmerge\Cli\Helpers\Boolean;
-use WPEmerge\Cli\Presets\Bootstrap;
-use WPEmerge\Cli\Presets\Bulma;
-use WPEmerge\Cli\Presets\CarbonFields;
-use WPEmerge\Cli\Presets\FontAwesome;
-use WPEmerge\Cli\Presets\Foundation;
-use WPEmerge\Cli\Presets\PresetInterface;
-use WPEmerge\Cli\Presets\Tachyons;
 
 class Install extends Command {
 	/**
@@ -25,84 +20,30 @@ class Install extends Command {
 	 */
 	protected function configure() {
 		$this
-			->setName( 'install-theme' )
-			->setDescription( 'Interactively enables theme options.' )
-			->setHelp( 'Provides a number of choices on how to decorate your WP Emerge Theme.' )
-			->addOption(
-				'confirm',
-				null,
-				InputOption::VALUE_REQUIRED,
-				'Flag whether to ask for confirmation in interactive mode or not.',
-				true
-			)
-			->addOption(
-				'install-carbon-fields',
-				null,
-				InputOption::VALUE_REQUIRED,
-				'Flag whether to install Carbon Fields or not.'
-			)
-			->addOption(
-				'install-css-framework',
-				null,
-				InputOption::VALUE_REQUIRED,
-				'CSS framework to install, if any.'
-			)
-			->addOption(
-				'install-font-awesome',
-				null,
-				InputOption::VALUE_REQUIRED,
-				'Flag whether to install Font Awesome or not.'
-			);
+			->setName( 'install' )
+			->setDescription( 'Interactively install theme options.' )
+			->setHelp( 'Provides a number of choices on how to decorate your WP Emerge Theme.' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	protected function execute( InputInterface $input, OutputInterface $output ) {
+		if ( ! $input->isInteractive() ) {
+			throw new RuntimeException( 'The install command requires an interactive session.' );
+		}
+
 		$config = [
-			'remove_composer_author_information' => true,
-			'install_carbon_fields' => false,
-			'install_css_framework' => 'None',
-			'install_font_awesome' => false,
+			'remove_composer_author_information' => $this->shouldRemoveComposerAuthorInformation( $input, $output ),
+			'install_carbon_fields' => $this->shouldInstallCarbonFields( $input, $output ),
+			'install_css_framework' => $this->shouldInstallCssFramework( $input, $output ),
+			'install_font_awesome' => $this->shouldInstallFontAwesome( $input, $output ),
 		];
 
-		$config[ 'install_carbon_fields' ] = $this->shouldInstallCarbonFields( $input, $output );
-		$config[ 'install_css_framework' ] = $this->shouldInstallCssFramework( $input, $output );
-		$config[ 'install_font_awesome' ] = $this->shouldInstallFontAwesome( $input, $output );
+		$proceed = $this->shouldProceedWithInstall( $input, $output, $config );
 
-		$confirm = Boolean::fromString( $input->getOption( 'confirm' ) );
-		var_dump($confirm);
-
-		if ( $confirm && $input->isInteractive() ) {
-			$helper = $this->getHelper( 'question' );
-
-			$output->writeln( 'Configuration:' );
-			$output->writeln(
-				str_pad( 'Install Carbon Fields: ', 25 )  .
-				( $config['install_carbon_fields'] ? '<info>Yes</info>' : '<comment>No</comment>' )
-			);
-			$output->writeln(
-				str_pad( 'Install CSS Framework: ', 25 ) .
-				'<info>' . $config['install_css_framework'] . '</info>'
-			);
-			$output->writeln(
-				str_pad( 'Install Font Awesome: ', 25 ) .
-				( $config['install_font_awesome'] ? '<info>Yes</info>' : '<comment>No</comment>' )
-			);
-			$output->writeln( '' );
-
-			$question = new ConfirmationQuestion(
-				'Proceed with installation? <info>[Y/n]</info> ',
-				true
-			);
-
-			$proceed = $helper->ask( $input, $output, $question );
-			$output->writeln( '' );
-
-			if ( ! $proceed ) {
-				$output->writeln( '<comment>Installation aborted.</comment>' );
-				return;
-			}
+		if ( ! $proceed ) {
+			throw new RuntimeException( 'Install aborted.' );
 		}
 
 		if ( $config['remove_composer_author_information'] ) {
@@ -113,13 +54,34 @@ class Install extends Command {
 			$this->installCarbonFields( $input, $output );
 		}
 
-		if ( $config['install_css_framework'] ) {
+		if ( $config['install_css_framework'] !== 'None' ) {
 			$this->installCssFramework( $input, $output, $config['install_css_framework'] );
 		}
 
 		if ( $config['install_font_awesome'] ) {
 			$this->installFontAwesome( $input, $output );
 		}
+	}
+
+	/**
+	 * Check whether composer.json should be cleaned of author information
+	 *
+	 * @param  InputInterface  $input
+	 * @param  OutputInterface $output
+	 * @return boolean
+	 */
+	protected function shouldRemoveComposerAuthorInformation( InputInterface $input, OutputInterface $output ) {
+		$helper = $this->getHelper( 'question' );
+
+		$question = new ConfirmationQuestion(
+			'Would you like to remove author information from composer.json? <info>[y/N]</info> ',
+			false
+		);
+
+		$install = $helper->ask( $input, $output, $question );
+		$output->writeln( '' );
+
+		return $install;
 	}
 
 	/**
@@ -130,14 +92,15 @@ class Install extends Command {
 	 * @return void
 	 */
 	protected function removeComposerAuthorInformation( InputInterface $input, OutputInterface $output ) {
-		$composer = Composer::getComposerJson( getcwd() );
+		$command = $this->getApplication()->find( 'install:clean-composer' );
 
-		unset( $composer['name'] );
-		unset( $composer['description'] );
-		unset( $composer['homepage'] );
-		unset( $composer['authors'] );
+		$output->write( '<comment>Cleaning <info>composer.json</info> ...</comment>' );
 
-		Composer::storeComposerJson( $composer, getcwd() );
+		$command->run( new ArrayInput( [
+			'command' => 'install:carbon-fields',
+		] ), new NullOutput() );
+
+		$output->writeln( ' <info>Done</info>' );
 	}
 
 	/**
@@ -148,25 +111,15 @@ class Install extends Command {
 	 * @return boolean
 	 */
 	protected function shouldInstallCarbonFields( InputInterface $input, OutputInterface $output ) {
-		$install = $input->getOption( 'install-carbon-fields' );
+		$helper = $this->getHelper( 'question' );
 
-		if ( $install === null ) {
-			if ( ! $input->isInteractive() ) {
-				$install = false;
-			} else {
-				$helper = $this->getHelper( 'question' );
+		$question = new ConfirmationQuestion(
+			'Would you like to install Carbon Fields? <info>[y/N]</info> ',
+			false
+		);
 
-				$question = new ConfirmationQuestion(
-					'Would you like to install Carbon Fields? <info>[y/N]</info> ',
-					false
-				);
-
-				$install = $helper->ask( $input, $output, $question );
-				$output->writeln( '' );
-			}
-		} else {
-			$install = Boolean::fromString( $install );
-		}
+		$install = $helper->ask( $input, $output, $question );
+		$output->writeln( '' );
 
 		return $install;
 	}
@@ -179,7 +132,11 @@ class Install extends Command {
 	 * @return void
 	 */
 	protected function installCarbonFields( InputInterface $input, OutputInterface $output ) {
-		$this->installPreset( new CarbonFields(), $output );
+		$command = $this->getApplication()->find( 'install:carbon-fields' );
+
+		$this->runInstallCommand( 'Carbon Fields', $command, new ArrayInput( [
+			'command' => 'install:carbon-fields',
+		] ), $output );
 	}
 
 	/**
@@ -190,24 +147,16 @@ class Install extends Command {
 	 * @return string
 	 */
 	protected function shouldInstallCssFramework( InputInterface $input, OutputInterface $output ) {
-		$css_framework = $input->getOption( 'install-css-framework' );
+		$helper = $this->getHelper( 'question' );
 
-		if ( $css_framework === null ) {
-			if ( ! $input->isInteractive() ) {
-				$css_framework = 'None';
-			} else {
-				$helper = $this->getHelper( 'question' );
+		$question = new ChoiceQuestion(
+			'Please select a CSS framework:',
+			['None', 'Bootstrap', 'Bulma', 'Foundation', 'Tachyons'],
+			0
+		);
 
-				$question = new ChoiceQuestion(
-					'Please select a CSS framework:',
-					['None', 'Bootstrap', 'Bulma', 'Foundation', 'Tachyons'],
-					0
-				);
-
-				$css_framework = $helper->ask( $input, $output, $question );
-				$output->writeln( '' );
-			}
-		}
+		$css_framework = $helper->ask( $input, $output, $question );
+		$output->writeln( '' );
 
 		return $css_framework;
 	}
@@ -221,39 +170,12 @@ class Install extends Command {
 	 * @return void
 	 */
 	protected function installCssFramework( InputInterface $input, OutputInterface $output, $css_framework ) {
-		$preset = null;
+		$command = $this->getApplication()->find( 'install:css-framework' );
 
-		switch ( $css_framework ) {
-			case 'None':
-				// nothing to do
-				break;
-
-			case 'Bootstrap':
-				$preset = new Bootstrap();
-				break;
-
-			case 'Bulma':
-				$preset = new Bulma();
-				break;
-
-			case 'Foundation':
-				$preset = new Foundation();
-				break;
-
-			case 'Tachyons':
-				$preset = new Tachyons();
-				break;
-
-			default:
-				throw new RuntimeException( 'Unknown css framework selected: ' . $css_framework );
-				break;
-		}
-
-		if ( $preset === null ) {
-			return;
-		}
-
-		$this->installPreset( $preset, $output );
+		$this->runInstallCommand( $css_framework, $command, new ArrayInput( [
+			'command' => 'install:css-framework',
+			'css-framework' => $css_framework,
+		] ), $output );
 	}
 
 	/**
@@ -264,25 +186,15 @@ class Install extends Command {
 	 * @return boolean
 	 */
 	protected function shouldInstallFontAwesome( InputInterface $input, OutputInterface $output ) {
-		$install = $input->getOption( 'install-font-awesome' );
+		$helper = $this->getHelper( 'question' );
 
-		if ( $install === null ) {
-			if ( ! $input->isInteractive() ) {
-				$install = false;
-			} else {
-				$helper = $this->getHelper( 'question' );
+		$question = new ConfirmationQuestion(
+			'Would you like to install Font Awesome? <info>[y/N]</info> ',
+			false
+		);
 
-				$question = new ConfirmationQuestion(
-					'Would you like to install Font Awesome? <info>[y/N]</info> ',
-					false
-				);
-
-				$install = $helper->ask( $input, $output, $question );
-				$output->writeln( '' );
-			}
-		} else {
-			$install = Boolean::fromString( $install );
-		}
+		$install = $helper->ask( $input, $output, $question );
+		$output->writeln( '' );
 
 		return $install;
 	}
@@ -295,24 +207,80 @@ class Install extends Command {
 	 * @return void
 	 */
 	protected function installFontAwesome( InputInterface $input, OutputInterface $output ) {
-		$this->installPreset( new FontAwesome(), $output );
+		$command = $this->getApplication()->find( 'install:font-awesome' );
+
+		$this->runInstallCommand( 'Font Awesome', $command, new ArrayInput( [
+			'command' => 'install:font-awesome',
+		] ), $output );
+	}
+
+	/**
+	 * Check whether we should proceed with installation
+	 *
+	 * @param  InputInterface  $input
+	 * @param  OutputInterface $output
+	 * @param  array           $config
+	 * @return boolean
+	 */
+	protected function shouldProceedWithInstall( InputInterface $input, OutputInterface $output, $config ) {
+		$helper = $this->getHelper( 'question' );
+
+		$output->writeln( 'Configuration:' );
+
+		$output->writeln(
+			str_pad( 'Clean composer.json: ', 25 )  .
+			( $config['remove_composer_author_information'] ? '<info>Yes</info>' : '<comment>No</comment>' )
+		);
+
+		$output->writeln(
+			str_pad( 'Install Carbon Fields: ', 25 )  .
+			( $config['install_carbon_fields'] ? '<info>Yes</info>' : '<comment>No</comment>' )
+		);
+
+		$output->writeln(
+			str_pad( 'Install CSS Framework: ', 25 ) .
+			'<info>' . $config['install_css_framework'] . '</info>'
+		);
+
+		$output->writeln(
+			str_pad( 'Install Font Awesome: ', 25 ) .
+			( $config['install_font_awesome'] ? '<info>Yes</info>' : '<comment>No</comment>' )
+		);
+
+		$output->writeln( '' );
+
+		$question = new ConfirmationQuestion(
+			'Proceed with installation? <info>[Y/n]</info> ',
+			true
+		);
+
+		$proceed = $helper->ask( $input, $output, $question );
+		$output->writeln( '' );
+
+		return $proceed;
 	}
 
 	/**
 	 * Install a preset
 	 *
-	 * @param  PresetInterface $preset
+	 * @param  string          $label
+	 * @param  Command         $command
+	 * @param  InputInterface  $input
 	 * @param  OutputInterface $output
 	 * @return void
 	 */
-	protected function installPreset( PresetInterface $preset, OutputInterface $output ) {
-		$output->write( '<comment>Installing <info>' . $preset->getName() . '</info> ...</comment>' );
-		$preset_output = $preset->execute( getcwd() );
+	protected function runInstallCommand( $label, Command $command, InputInterface $input, OutputInterface $output ) {
+		$buffered_output = new BufferedOutput();
+		$buffered_output->setVerbosity( $output->getVerbosity() );
+
+		$output->write( '<comment>Installing <info>' . $label . '</info> ...</comment>' );
+		$command->run( $input, $buffered_output );
 		$output->writeln( ' <info>Done</info>' );
 
-		if ( ! empty( $preset_output ) ) {
+		$buffered_output_value = $buffered_output->fetch();
+		if ( ! empty( $buffered_output_value ) ) {
 			$output->writeln( '---' );
-			$output->writeln( $preset_output );
+			$output->writeln( trim( $buffered_output_value ) );
 			$output->writeln( '---' );
 		}
 	}

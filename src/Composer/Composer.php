@@ -2,6 +2,9 @@
 
 namespace WPEmerge\Cli\Composer;
 
+use Symfony\Component\Process\Exception\ProcessFailedException;
+use WPEmerge\Cli\App;
+
 class Composer {
 	/**
 	 * Load and parse a composer.json file from a directory
@@ -36,5 +39,45 @@ class Composer {
 		$composer_json = $directory . DIRECTORY_SEPARATOR . 'composer.json';
 
 		file_put_contents( $composer_json, json_encode( $composer, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES ) );
+	}
+
+	/**
+	 * Install a package
+	 *
+	 * @param  string      $directory
+	 * @param  string      $package
+	 * @param  string|null $version
+	 * @param  boolean     $dev
+	 * @return string
+	 */
+	public static function installed( $directory, $package ) {
+		$command = 'composer show ' . $package . ' -D';
+
+		try {
+			App::execute( $command, $directory );
+		} catch ( ProcessFailedException $e ) {
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Install a package
+	 *
+	 * @param  string      $directory
+	 * @param  string      $package
+	 * @param  string|null $version
+	 * @param  boolean     $dev
+	 * @return string
+	 */
+	public static function install( $directory, $package, $version = null, $dev = false ) {
+		$command = 'composer require ' .
+			'"' . $package .( $version !== null ? ':' . $version : '' ) . '"' .
+			( $dev ? ' --dev' : '' );
+
+		$output = App::execute( $command, $directory );
+
+		return trim( $output );
 	}
 }

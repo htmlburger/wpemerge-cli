@@ -4,6 +4,7 @@ namespace WPEmerge\Cli\NodePackageManagers;
 
 use Exception;
 use Symfony\Component\Process\Exception\ProcessFailedException;
+use Symfony\Component\Process\Exception\RuntimeException;
 use WPEmerge\Cli\App;
 
 class Proxy implements NodePackageManagerInterface {
@@ -50,6 +51,6 @@ class Proxy implements NodePackageManagerInterface {
 			return new $class();
 		}
 
-		throw new Exception( 'Could not find a node package manager. Please check if npm is added to your PATH.' );
+		throw new RuntimeException( 'Could not find a node package manager. Please check if npm is added to your PATH.' );
 	}
 }

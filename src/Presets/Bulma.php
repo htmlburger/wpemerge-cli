@@ -2,6 +2,8 @@
 
 namespace WPEmerge\Cli\Presets;
 
+use Symfony\Component\Console\Output\OutputInterface;
+
 class Bulma implements PresetInterface {
 	use FrontEndPresetTrait;
 
@@ -15,13 +17,13 @@ class Bulma implements PresetInterface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function execute( $directory ) {
-		$output = [];
+	public function execute( $directory, OutputInterface $output ) {
+		$install_output = $this->installNodePackage( $directory, 'bulma', '^0.6', true );
 
-		$output[] = $this->installNodePackage( $directory, 'bulma', '^0.6', true );
+		if ( $output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE ) {
+			$output->writeln( $install_output );
+		}
 
 		$this->addCssVendorImport( $directory, 'bulma/css/bulma.css' );
-
-		return implode( PHP_EOL, $output );
 	}
 }

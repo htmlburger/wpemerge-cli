@@ -7,6 +7,7 @@ use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Process\Exception\RuntimeException;
 use Symfony\Component\Process\Exception\ProcessFailedException;
+use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Input\Input;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
@@ -14,6 +15,10 @@ use Symfony\Component\Console\Output\Output;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\ProcessBuilder;
 use WPEmerge\Cli\Commands\Install;
+use WPEmerge\Cli\Commands\InstallCarbonFields;
+use WPEmerge\Cli\Commands\InstallCleanComposer;
+use WPEmerge\Cli\Commands\InstallCssFramework;
+use WPEmerge\Cli\Commands\InstallFontAwesome;
 use WPEmerge\Cli\Commands\MakeController;
 use WPEmerge\Cli\Commands\MakeFacade;
 use WPEmerge\Cli\Commands\MakeViewComposer;
@@ -33,6 +38,10 @@ class App {
 		$application = new Application( 'WPEmerge CLI', $composer['version'] );
 
 		$application->add( new Install() );
+		$application->add( new InstallCarbonFields() );
+		$application->add( new InstallCleanComposer() );
+		$application->add( new InstallCssFramework() );
+		$application->add( new InstallFontAwesome() );
 		$application->add( new MakeController() );
 		$application->add( new MakeFacade() );
 		$application->add( new MakeViewComposer() );
@@ -45,18 +54,19 @@ class App {
 			$output = new ConsoleOutput();
 		}
 
-		$output->writeln( '' );
-
 		if ( ! static::isWordPressThemeDirectory( getcwd() ) ) {
 			$output->writeln( '<error>Commands must be called from the root of a WordPress theme.</error>');
 			return;
 		}
 
+		$output->getFormatter()
+			->setStyle( 'failure', new OutputFormatterStyle( 'red' ) );
+
 		$application->run( $input, $output );
 	}
 
 	/**
-	 * Run with the install-theme command
+	 * Run with the install command
 	 *
 	 * @return void
 	 */
@@ -69,7 +79,7 @@ class App {
 		$process = (new ProcessBuilder())
 			->setTimeout( null )
 			->setPrefix( 'php' )
-			->setArguments( [ $binary, 'install-theme' ] )
+			->setArguments( [ $binary, 'install' ] )
 			->getProcess();
 
 		try {

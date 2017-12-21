@@ -2,6 +2,7 @@
 
 namespace WPEmerge\Cli\NodePackageManagers;
 
+use Symfony\Component\Process\Exception\RuntimeException;
 use WPEmerge\Cli\App;
 
 class Yarn implements NodePackageManagerInterface {
@@ -15,7 +16,7 @@ class Yarn implements NodePackageManagerInterface {
 		$json = @json_decode( trim( $output ), true );
 
 		if ( ! $json ) {
-			throw new Exception( 'Could not determine if the ' . $package . ' package is already installed.' );
+			throw new RuntimeException( 'Could not determine if the ' . $package . ' package is already installed.' );
 		}
 
 		if ( count( $json['data']['trees'] ) === 0 ) {
