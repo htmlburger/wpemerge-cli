@@ -13,7 +13,6 @@ use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\Output;
 use Symfony\Component\Process\Process;
-use Symfony\Component\Process\ProcessBuilder;
 use WPEmerge\Cli\Commands\Install;
 use WPEmerge\Cli\Commands\InstallCarbonFields;
 use WPEmerge\Cli\Commands\InstallCleanComposer;
@@ -77,11 +76,8 @@ class App {
 
 		$event->getIO()->write( '' );
 
-		$process = (new ProcessBuilder())
-			->setTimeout( null )
-			->setPrefix( $binary )
-			->setArguments( ['install' ] )
-			->getProcess();
+		$process = new Process( $binary . ' install' );
+		$process->setTimeout( null );
 
 		try {
 			$process->setTty( true );
