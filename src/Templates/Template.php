@@ -2,8 +2,6 @@
 
 namespace WPEmerge\Cli\Templates;
 
-use Camel\CaseTransformer;
-use Camel\Format;
 use Symfony\Component\Console\Exception\InvalidArgumentException;
 
 abstract class Template {
