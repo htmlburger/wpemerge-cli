@@ -55,12 +55,11 @@ class App {
 		}
 
 		if ( ! static::isWordPressThemeDirectory( getcwd() ) ) {
-			$output->writeln( '<error>Commands must be called from the root of a WordPress theme.</error>');
+			$application->renderException( new RuntimeException( 'Commands must be called from the root of a WordPress theme.' ), $output );
 			return;
 		}
 
-		$output->getFormatter()
-			->setStyle( 'failure', new OutputFormatterStyle( 'red' ) );
+		$output->getFormatter()->setStyle( 'failure', new OutputFormatterStyle( 'red' ) );
 
 		$application->run( $input, $output );
 	}
@@ -70,7 +69,7 @@ class App {
 	 *
 	 * @return void
 	 */
-	public static function installTheme( Event $event ) {
+	public static function install( Event $event ) {
 		$binary_name = 'wpemerge';
 		$binary = dirname( __DIR__ ) . DIRECTORY_SEPARATOR . 'bin' . DIRECTORY_SEPARATOR . $binary_name;
 
@@ -78,8 +77,8 @@ class App {
 
 		$process = (new ProcessBuilder())
 			->setTimeout( null )
-			->setPrefix( 'php' )
-			->setArguments( [ $binary, 'install' ] )
+			->setPrefix( $binary )
+			->setArguments( ['install' ] )
 			->getProcess();
 
 		try {
