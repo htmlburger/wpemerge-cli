@@ -1,0 +1,30 @@
+<?php
+
+namespace WPEmerge\Cli\Commands;
+
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Process\Exception\RuntimeException;
+use WPEmerge\Cli\Presets\GravityFormsUtilities;
+
+class InstallGravityFormsUtilities extends Command {
+	/**
+	 * {@inheritDoc}
+	 */
+	protected function configure() {
+		$this
+			->setName( 'install:gravity-forms-utilities' )
+			->setDescription( 'Install custom Gravity Forms utilities.' )
+			->setHelp( 'Install custom Gravity Forms utilities.' );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	protected function execute( InputInterface $input, OutputInterface $output ) {
+		$preset = new GravityFormsUtilities();
+		$preset_output = $preset->execute( getcwd(), $output );
+		$output->writeln( $preset_output );
+	}
+}
