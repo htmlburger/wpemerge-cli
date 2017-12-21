@@ -28,6 +28,7 @@ class Boolean {
 			}
 		}
 
-		return $string == true; // rely on PHP's strnig to boolean conversion
+		// rely on PHP's strnig to boolean conversion in all other cases
+		return (bool) $string;
 	}
 }
