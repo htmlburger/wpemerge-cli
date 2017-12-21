@@ -23,6 +23,11 @@ trait BackEndPresetTrait {
 				continue;
 			}
 
+			$directory = dirname( $destination );
+			if ( ! is_dir( $directory ) ) {
+				mkdir( $directory );
+			}
+
 			copy( $source, $destination );
 		}
 

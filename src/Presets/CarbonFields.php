@@ -55,13 +55,33 @@ class CarbonFields implements PresetInterface {
 		 */
 		Composer::install( $directory, $this->package_name, $this->version_constraint );
 
+		/**
+		 * Copy files
+		 */
+		$copy_list = $this->getCopyList( $directory );
+		$failures = $this->copy( $copy_list );
+		foreach ( $failures as $source => $destination ) {
+			$output->writeln( '<failure>File ' . $destination . ' already exists - skipped.</failure>' );
+		}
+
+		/**
+		 * Add statements
+		 */
+		$this->addRequires( $directory );
+		$this->addHooks( $directory );
+		$this->addWidgets( $directory );
+	}
+
+	/**
+	 * Get array of files to copy
+	 *
+	 * @param  string $directory
+	 * @return array
+	 */
+	protected function getCopyList( $directory ) {
 		$source_dir = $this->path( WPEMERGE_CLI_DIR, 'src', 'CarbonFields', 'carbon-fields' ) . DIRECTORY_SEPARATOR;
 		$destination_dir = $this->path( $directory, 'app', 'setup', 'carbon-fields' ) . DIRECTORY_SEPARATOR;
 		$copy_list = [];
-
-		if ( ! is_dir( $destination_dir ) ) {
-			mkdir( $destination_dir );
-		}
 
 		/**
 		 * Setup files
@@ -89,20 +109,7 @@ class CarbonFields implements PresetInterface {
 			$this->path( WPEMERGE_CLI_DIR, 'src', 'CarbonFields', 'carbon-fields.php' )
 		] = $this->path( $directory, 'app', 'helpers', 'carbon-fields.php' );
 
-		/**
-		 * Copy files
-		 */
-		$failures = $this->copy( $copy_list );
-		foreach ( $failures as $source => $destination ) {
-			$output->writeln( '<failure>File ' . $destination . ' already exists - skipped.</failure>' );
-		}
-
-		/**
-		 * Add statements
-		 */
-		$this->addRequires( $directory );
-		$this->addHooks( $directory );
-		$this->addWidgets( $directory );
+		return $copy_list;
 	}
 
 	/**
