@@ -7,7 +7,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use WPEmerge\Cli\Composer\Composer;
 
 class CarbonFields implements PresetInterface {
-	use StatementAppenderTrait;
+	use BackEndPresetTrait;
 
 	/**
 	 * Package name
@@ -102,6 +102,7 @@ class CarbonFields implements PresetInterface {
 		 */
 		$this->addRequires( $directory );
 		$this->addHooks( $directory );
+		$this->addWidgets( $directory );
 	}
 
 	/**
@@ -161,33 +162,23 @@ EOT
 	}
 
 	/**
-	 * Copy a list of files, returning an array of failures
+	 * Add widget statements
 	 *
-	 * @param  array $files
-	 * @return array
+	 * @param  string $directory
+	 * @return void
 	 */
-	protected function copy( $files ) {
-		$failures = [];
+	protected function addWidgets( $directory ) {
+		$widgets_filepath = $this->path( $directory, 'app', 'setup', 'widgets.php' );
 
-		foreach ( $files as $source => $destination ) {
-			if ( file_exists( $destination ) ) {
-				$failures[ $source ] = $destination;
-				continue;
-			}
+		$this->appendUniqueStatement(
+			$widgets_filepath,
+			<<<'EOT'
 
-			copy( $source, $destination );
-		}
-
-		return $failures;
-	}
-
-	/**
-	 * Join path pieces with appropriate directory separator
-	 *
-	 * @param  string $path,...
-	 * @return string
-	 */
-	protected function path() {
-		return implode( DIRECTORY_SEPARATOR, func_get_args() );
+/**
+ * Rich Text widget
+ */
+register_widget( App\Widgets\Carbon_Rich_Text_Widget::class );
+EOT
+		);
 	}
 }
