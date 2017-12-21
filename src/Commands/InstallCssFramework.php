@@ -62,7 +62,6 @@ class InstallCssFramework extends Command {
 			return;
 		}
 
-		$preset_output = $preset->execute( getcwd(), $output );
-		$output->writeln( $preset_output );
+		$preset->execute( getcwd(), $output );
 	}
 }

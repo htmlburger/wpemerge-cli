@@ -24,7 +24,6 @@ class InstallGravityFormsUtilities extends Command {
 	 */
 	protected function execute( InputInterface $input, OutputInterface $output ) {
 		$preset = new GravityFormsUtilities();
-		$preset_output = $preset->execute( getcwd(), $output );
-		$output->writeln( $preset_output );
+		$preset->execute( getcwd(), $output );
 	}
 }

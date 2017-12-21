@@ -25,7 +25,6 @@ class InstallFontAwesome extends Command {
 	 */
 	protected function execute( InputInterface $input, OutputInterface $output ) {
 		$preset = new FontAwesome();
-		$preset_output = $preset->execute( getcwd(), $output );
-		$output->writeln( $preset_output );
+		$preset->execute( getcwd(), $output );
 	}
 }
