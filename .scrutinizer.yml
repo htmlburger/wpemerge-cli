@@ -11,6 +11,8 @@ build:
 filter:
   excluded_paths:
     - 'bin/*'
+    - 'src/CarbonFields/*'
+    - 'src/GravityForms/*'
 
 checks:
   php: true
