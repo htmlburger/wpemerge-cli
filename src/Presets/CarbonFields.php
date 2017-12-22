@@ -43,30 +43,18 @@ class CarbonFields implements PresetInterface {
 	 * {@inheritDoc}
 	 */
 	public function execute( $directory, OutputInterface $output ) {
-		/**
-		 * Make sure Carbon Fields is not already installed
-		 */
 		if ( Composer::installed( $directory, $this->package_name ) ) {
 			throw new RuntimeException( 'The Carbon Fields composer package is already installed.' );
 		}
 
-		/**
-		 * Require composer package
-		 */
 		Composer::install( $directory, $this->package_name, $this->version_constraint );
 
-		/**
-		 * Copy files
-		 */
 		$copy_list = $this->getCopyList( $directory );
 		$failures = $this->copy( $copy_list );
 		foreach ( $failures as $source => $destination ) {
 			$output->writeln( '<failure>File ' . $destination . ' already exists - skipped.</failure>' );
 		}
 
-		/**
-		 * Add statements
-		 */
 		$this->addRequires( $directory );
 		$this->addHooks( $directory );
 		$this->addWidgets( $directory );
