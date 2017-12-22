@@ -25,7 +25,7 @@ class $name {
 		// or validate request parameters etc.
 		\$foo = 'foobar';
 
-		return wpm_view( \$view, [
+		return app_view( \$view, [
 			'foo' => \$foo,
 		] );
 	}

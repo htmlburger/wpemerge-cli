@@ -53,7 +53,7 @@ class GravityFormsUtilities implements PresetInterface {
 		$this->appendUniqueStatement(
 			$this->path( $directory, 'app', 'helpers.php' ),
 			<<<'EOT'
-require_once WPMT_APP_HELPERS_DIR . 'gravity-forms.php';
+require_once APP_APP_HELPERS_DIR . 'gravity-forms.php';
 EOT
 		);
 	}
@@ -74,7 +74,7 @@ EOT
 /**
  * Add useful classes to gravity form elements to easier styling
  */
-add_filter( 'gform_field_css_class', 'wpmt_decorate_gforms_classes', 10, 3 );
+add_filter( 'gform_field_css_class', 'app_decorate_gforms_classes', 10, 3 );
 EOT
 		);
 
@@ -85,7 +85,7 @@ EOT
 /**
  * Replace the gravity forms spinner gif
  */
-// add_filter( 'gform_ajax_spinner_url', 'wpmt_gform_ajax_spinner_url', 10, 2 );
+// add_filter( 'gform_ajax_spinner_url', 'app_gform_ajax_spinner_url', 10, 2 );
 EOT
 		);
 

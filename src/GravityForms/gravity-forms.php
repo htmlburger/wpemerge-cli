@@ -10,7 +10,7 @@
  * @param  array  $field   The Field, whose classes can be modified.
  * @return string $classes
  */
-function wpmt_decorate_gforms_classes( $classes, $field ) {
+function app_decorate_gforms_classes( $classes, $field ) {
 	$classes .= ' gfield-' . $field['type'] . ' gfield-' . $field['size'];
 
 	return $classes;
@@ -21,7 +21,7 @@ function wpmt_decorate_gforms_classes( $classes, $field ) {
  *
  * @return array $forms_ids
  */
-function wpmt_get_forms() {
+function app_get_forms() {
 	$forms_ids = array();
 
 	if ( class_exists( 'RGFormsModel' ) ) {
@@ -36,7 +36,7 @@ function wpmt_get_forms() {
 	 *
 	 * @param array $forms_ids The IDs of the Gravity Forms in the list.
 	 */
-	$form_ids = apply_filters( 'wpmt_gravity_form_options', $forms_ids );
+	$form_ids = apply_filters( 'app_gravity_form_options', $forms_ids );
 
 	return $forms_ids;
 }
@@ -57,7 +57,7 @@ function wpmt_get_forms() {
  * @param  array   $args    Optional. An array of arguments.
  * @return void
  */
-function wpmt_render_gform( $id, $is_ajax = false, $args = array() ) {
+function app_render_gform( $id, $is_ajax = false, $args = array() ) {
 	if ( ! function_exists( 'gravity_form' ) || empty( $id ) ) {
 		return;
 	}
@@ -73,7 +73,7 @@ function wpmt_render_gform( $id, $is_ajax = false, $args = array() ) {
 	 *
 	 * @param integer $step The Step with which the global tabindex is increased each time.
 	 */
-	$step = apply_filters( 'wpmt_gform_tabindex_step', 500 );
+	$step = apply_filters( 'app_gform_tabindex_step', 500 );
 
 	// Tabindex backward compatibility.
 	if ( is_numeric( $args ) ) {
@@ -111,6 +111,6 @@ function wpmt_render_gform( $id, $is_ajax = false, $args = array() ) {
  * @param  object $form      Current form.
  * @return string
  */
-function wpmt_gform_ajax_spinner_url( $image_src, $form ) {
-	return get_bloginfo( 'stylesheet_directory' ) . '/' . WPMT_DIST_DIR_NAME . '/images/spinner.gif';
+function app_gform_ajax_spinner_url( $image_src, $form ) {
+	return get_bloginfo( 'stylesheet_directory' ) . '/' . APP_DIST_DIR_NAME . '/images/spinner.gif';
 }

@@ -112,7 +112,7 @@ class CarbonFields implements PresetInterface {
 		$this->appendUniqueStatement(
 			$this->path( $directory, 'app', 'helpers.php' ),
 			<<<'EOT'
-require_once WPMT_APP_HELPERS_DIR . 'carbon-fields.php';
+require_once APP_APP_HELPERS_DIR . 'carbon-fields.php';
 EOT
 		);
 	}
@@ -139,21 +139,21 @@ EOT
 		$this->appendUniqueStatement(
 			$hooks_filepath,
 			<<<'EOT'
-add_action( 'after_setup_theme', 'wpmt_boot_carbon_fields', 100 );
+add_action( 'after_setup_theme', 'app_boot_carbon_fields', 100 );
 EOT
 		);
 
 		$this->appendUniqueStatement(
 			$hooks_filepath,
 			<<<'EOT'
-add_action( 'carbon_fields_register_fields', 'wpmt_boot_carbon_fields_register_fields' );
+add_action( 'carbon_fields_register_fields', 'app_boot_carbon_fields_register_fields' );
 EOT
 		);
 
 		$this->appendUniqueStatement(
 			$hooks_filepath,
 			<<<'EOT'
-add_filter( 'carbon_fields_map_field_api_key', 'wpmt_filter_carbon_fields_google_maps_api_key' );
+add_filter( 'carbon_fields_map_field_api_key', 'app_filter_carbon_fields_google_maps_api_key' );
 EOT
 		);
 	}
