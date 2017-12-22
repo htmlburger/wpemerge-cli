@@ -19,26 +19,16 @@ class GravityFormsUtilities implements PresetInterface {
 	 * {@inheritDoc}
 	 */
 	public function execute( $directory, OutputInterface $output ) {
-		$copy_list = [];
-
-		/**
-		 * Helper file
-		 */
-		$copy_list[
+		$copy_list = [
 			$this->path( WPEMERGE_CLI_DIR, 'src', 'GravityForms', 'gravity-forms.php' )
-		] = $this->path( $directory, 'app', 'helpers', 'gravity-forms.php' );
+				=> $this->path( $directory, 'app', 'helpers', 'gravity-forms.php' ),
+		];
 
-		/**
-		 * Copy files
-		 */
 		$failures = $this->copy( $copy_list );
 		foreach ( $failures as $source => $destination ) {
 			$output->writeln( '<failure>File ' . $destination . ' already exists - skipped.</failure>' );
 		}
 
-		/**
-		 * Add statements
-		 */
 		$this->addRequires( $directory );
 		$this->addHooks( $directory );
 	}
