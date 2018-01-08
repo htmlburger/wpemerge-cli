@@ -11,7 +11,7 @@ use Carbon_Fields\Container\Container;
 use Carbon_Fields\Field\Field;
 
 /*
-Container::make( 'post_meta', __( 'Custom Data', 'wmpt' ) )
+Container::make( 'post_meta', __( 'Custom Data', 'app' ) )
 	->where( 'post_type', '=', 'page' )
 	->add_fields( array(
 		Field::make( 'complex', 'crb_my_data' )

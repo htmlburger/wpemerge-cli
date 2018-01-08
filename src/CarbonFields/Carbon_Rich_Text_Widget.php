@@ -15,11 +15,11 @@ class Carbon_Rich_Text_Widget extends Widget {
 	public function __construct() {
 		$this->setup(
 			'rich_text',
-			__( 'Rich Text', 'wmpt' ),
-			__( 'Displays a block with title and WYSIWYG content.', 'wmpt' ),
+			__( 'Rich Text', 'app' ),
+			__( 'Displays a block with title and WYSIWYG content.', 'app' ),
 			array(
-				Field::make( 'text', 'title', __( 'Title', 'wmpt' ) ),
-				Field::make( 'rich_text', 'content', __( 'Content', 'wmpt' ) ),
+				Field::make( 'text', 'title', __( 'Title', 'app' ) ),
+				Field::make( 'rich_text', 'content', __( 'Content', 'app' ) ),
 			)
 		);
 	}

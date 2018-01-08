@@ -11,7 +11,7 @@ use Carbon_Fields\Container\Container;
 use Carbon_Fields\Field\Field;
 
 /*
-Container::make( 'term_meta', __( 'Custom Data', 'wmpt' ) )
+Container::make( 'term_meta', __( 'Custom Data', 'app' ) )
 	->where( 'term_taxonomy', '=', 'category' )
 	->add_fields( array(
 		Field::make( 'image', 'crb_img' ),

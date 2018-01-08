@@ -11,7 +11,7 @@ use Carbon_Fields\Container\Container;
 use Carbon_Fields\Field\Field;
 
 /*
-Container::make( 'user_meta', __( 'Custom Data', 'wmpt' ) )
+Container::make( 'user_meta', __( 'Custom Data', 'app' ) )
 	->add_fields( array(
 		Field::make( 'image', 'crb_img' ),
 	));
