@@ -24,7 +24,7 @@ trait BackEndPresetTrait {
 			}
 
 			$directory = dirname( $destination );
-			if ( ! is_dir( $directory ) ) {
+			if ( ! file_exists( $directory ) ) {
 				mkdir( $directory );
 			}
 

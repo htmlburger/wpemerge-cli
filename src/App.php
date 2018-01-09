@@ -21,6 +21,7 @@ use WPEmerge\Cli\Commands\InstallCssFramework;
 use WPEmerge\Cli\Commands\InstallFontAwesome;
 use WPEmerge\Cli\Commands\InstallGravityFormsUtilities;
 use WPEmerge\Cli\Commands\InstallHtmlBurgerEnv;
+use WPEmerge\Cli\Commands\InstallPhpTests;
 use WPEmerge\Cli\Commands\MakeController;
 use WPEmerge\Cli\Commands\MakeFacade;
 use WPEmerge\Cli\Commands\MakeViewComposer;
@@ -99,6 +100,7 @@ class App {
 		$application->add( new InstallFontAwesome() );
 		$application->add( new InstallGravityFormsUtilities() );
 		$application->add( new InstallHtmlBurgerEnv() );
+		$application->add( new InstallPhpTests() );
 		$application->add( new MakeController() );
 		$application->add( new MakeFacade() );
 		$application->add( new MakeViewComposer() );
