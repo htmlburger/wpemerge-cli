@@ -16,7 +16,7 @@ class Controller extends Template {
 
 namespace App\\$namespace;
 
-use WPEmerge\Request;
+use WPEmerge\Requests\Request;
 
 class $name {
 	public function index( Request \$request, \$view ) {
@@ -25,9 +25,10 @@ class $name {
 		// or validate request parameters etc.
 		\$foo = 'foobar';
 
-		return app_view( \$view, [
-			'foo' => \$foo,
-		] );
+		return app_view( \$view )
+			->with( [
+				'foo' => \$foo,
+			] );
 	}
 }
 

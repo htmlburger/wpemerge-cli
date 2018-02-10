@@ -18,9 +18,9 @@ namespace App\\$namespace;
 
 class $name {
 	public function compose( \$view ) {
-		return [
+		\$view->with( [
 			'foo' => 'bar',
-		];
+		] );
 	}
 }
 
