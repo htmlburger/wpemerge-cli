@@ -4,19 +4,6 @@
  */
 
 /**
- * Add additional classes to Gravity Forms fields.
- *
- * @param  string $classes The classes that will be applied.
- * @param  array  $field   The Field, whose classes can be modified.
- * @return string $classes
- */
-function app_decorate_gforms_classes( $classes, $field ) {
-	$classes .= ' gfield-' . $field['type'] . ' gfield-' . $field['size'];
-
-	return $classes;
-}
-
-/**
  * Return all available Gravity Forms
  *
  * @return array $forms_ids
@@ -105,12 +92,25 @@ function app_render_gform( $id, $is_ajax = false, $args = array() ) {
 }
 
 /**
+ * Add additional classes to Gravity Forms fields.
+ *
+ * @param  string $classes The classes that will be applied.
+ * @param  array  $field   The Field, whose classes can be modified.
+ * @return string $classes
+ */
+function app_filter_decorate_gforms_classes( $classes, $field ) {
+	$classes .= ' gfield-' . $field['type'] . ' gfield-' . $field['size'];
+
+	return $classes;
+}
+
+/**
  * Return path to spinner gif
  *
  * @param  string $image_src The spinner image URL to be filtered.
  * @param  object $form      Current form.
  * @return string
  */
-function app_gform_ajax_spinner_url( $image_src, $form ) {
+function app_filter_gform_ajax_spinner_url( $image_src, $form ) {
 	return get_bloginfo( 'stylesheet_directory' ) . '/' . APP_DIST_DIR_NAME . '/images/spinner.gif';
 }

@@ -64,7 +64,7 @@ EOT
 /**
  * Add useful classes to gravity form elements to easier styling
  */
-add_filter( 'gform_field_css_class', 'app_decorate_gforms_classes', 10, 3 );
+add_filter( 'gform_field_css_class', 'app_filter_decorate_gforms_classes', 10, 3 );
 EOT
 		);
 
@@ -75,7 +75,7 @@ EOT
 /**
  * Replace the gravity forms spinner gif
  */
-// add_filter( 'gform_ajax_spinner_url', 'app_gform_ajax_spinner_url', 10, 2 );
+// add_filter( 'gform_ajax_spinner_url', 'app_filter_gform_ajax_spinner_url', 10, 2 );
 EOT
 		);
 
