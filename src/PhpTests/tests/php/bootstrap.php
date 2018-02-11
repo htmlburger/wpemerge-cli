@@ -1,10 +1,12 @@
 <?php
 
+namespace App\Tests;
+
 class App_Tests_Bootstrap {
 	/**
 	 * The bootstrap instance.
 	 *
-	 * @var WPEmerge_Tests_Bootstrap
+	 * @var App_Tests_Bootstrap
 	 */
 	protected static $instance = null;
 
@@ -39,11 +41,11 @@ class App_Tests_Bootstrap {
 	/**
 	 * Get the single tests boostrap instance
 	 *
-	 * @return WPEmerge_Tests_Bootstrap
+	 * @return App_Tests_Bootstrap
 	 */
 	public static function instance() {
 		if ( is_null( static::$instance ) ) {
-			static::$instance = new self();
+			static::$instance = new static();
 		}
 
 		return static::$instance;
@@ -60,8 +62,6 @@ class App_Tests_Bootstrap {
 		$this->library_directory = dirname( __DIR__ );
 		$this->tests_directory = __DIR__;
 		$this->wp_tests_directory = getenv( 'WP_TESTS_DIR' ) ? getenv( 'WP_TESTS_DIR' ) : $this->tests_directory . '/environment/wordpress-tests-lib';
-
-		define( 'WPEMERGE_TEST_DIR', $this->tests_directory );
 	}
 
 	/**
