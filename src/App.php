@@ -4,7 +4,6 @@ namespace WPEmerge\Cli;
 
 use Composer\EventDispatcher\Event;
 use Symfony\Component\Console\Application;
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\Input;
@@ -121,6 +120,7 @@ class App {
 	/**
 	 * Check if a directory is a WordPress theme root
 	 *
+	 * @param  string  $directory
 	 * @return boolean
 	 */
 	protected static function isWordPressThemeDirectory( $directory ) {

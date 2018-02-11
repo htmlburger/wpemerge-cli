@@ -2,9 +2,6 @@
 
 namespace WPEmerge\Cli\Presets;
 
-use Symfony\Component\Process\Exception\RuntimeException;
-use WPEmerge\Cli\NodePackageManagers\Proxy;
-
 trait BackEndPresetTrait {
 	use StatementAppenderTrait;
 

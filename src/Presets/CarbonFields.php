@@ -2,8 +2,8 @@
 
 namespace WPEmerge\Cli\Presets;
 
-use Symfony\Component\Process\Exception\RuntimeException;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Process\Exception\RuntimeException;
 use WPEmerge\Cli\Composer\Composer;
 
 class CarbonFields implements PresetInterface {
