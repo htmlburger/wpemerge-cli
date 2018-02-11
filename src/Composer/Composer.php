@@ -70,9 +70,9 @@ class Composer {
 	 * @return string
 	 */
 	public static function install( $directory, $package, $version = null, $dev = false ) {
-		$command = 'composer require ' .
-			'"' . $package .( $version !== null ? ':' . $version : '' ) . '"' .
-			( $dev ? ' --dev' : '' );
+		$command = 'composer require' .
+			( $dev ? ' --dev' : '' ) .
+			' "' . $package .( $version !== null ? ':' . $version : '' ) . '"';
 
 		$output = App::execute( $command, $directory );
 

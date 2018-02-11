@@ -41,17 +41,25 @@ class InstallHtmlBurgerEnv extends Command {
 		] ), $output );
 
 		$composer_packages = [
-			'htmlburger/carbon-pagination' => '1.1.*',
-			'htmlburger/theme-help' => '^1.1.7',
+			'require' => [
+				'htmlburger/theme-help' => '^1.1.7',
+			],
+			'require-dev' => [
+				'htmlburger/carbon-debug' => '^1.0.2',
+			],
 		];
 
-		foreach ( $composer_packages as $package_name => $version_constraint ) {
-			if ( Composer::installed( $directory, $package_name ) ) {
-				$output->writeln( '<failure>Composer package ' . $package_name . ' is already installed - skipped.</failure>' );
-				continue;
-			}
+		foreach ( $composer_packages as $environment => $environment_packages ) {
+			$dev = $environment === 'require-dev';
 
-			Composer::install( $directory, $package_name, $version_constraint );
+			foreach ( $environment_packages as $package_name => $version_constraint ) {
+				if ( Composer::installed( $directory, $package_name ) ) {
+					$output->writeln( '<failure>Composer package ' . $package_name . ' is already installed - skipped.</failure>' );
+					continue;
+				}
+
+				Composer::install( $directory, $package_name, $version_constraint, $dev );
+			}
 		}
 	}
 }
