@@ -24,7 +24,7 @@ class InstallHtmlBurgerEnv extends Command {
 	protected function execute( InputInterface $input, OutputInterface $output ) {
 		$clean_composer = $this->getApplication()->find( 'install:clean-composer');
 		$install_carbon_fields = $this->getApplication()->find( 'install:carbon-fields');
-		$install_graviry_forms_utilities = $this->getApplication()->find( 'install:gravity-forms-utilities' );
+		$install_gravity_forms_utilities = $this->getApplication()->find( 'install:gravity-forms-utilities' );
 
 		$clean_composer->run( new ArrayInput( [
 			'command' => $clean_composer->getName(),
@@ -34,8 +34,8 @@ class InstallHtmlBurgerEnv extends Command {
 			'command' => $install_carbon_fields->getName(),
 		] ), $output );
 
-		$install_graviry_forms_utilities->run( new ArrayInput( [
-			'command' => $install_graviry_forms_utilities->getName(),
+		$install_gravity_forms_utilities->run( new ArrayInput( [
+			'command' => $install_gravity_forms_utilities->getName(),
 		] ), $output );
 	}
 }
