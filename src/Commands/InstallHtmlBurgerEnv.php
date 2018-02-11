@@ -6,6 +6,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use WPEmerge\Cli\Composer\Composer;
 
 class InstallHtmlBurgerEnv extends Command {
 	/**
@@ -22,6 +23,7 @@ class InstallHtmlBurgerEnv extends Command {
 	 * {@inheritDoc}
 	 */
 	protected function execute( InputInterface $input, OutputInterface $output ) {
+		$directory = getcwd();
 		$clean_composer = $this->getApplication()->find( 'install:clean-composer');
 		$install_carbon_fields = $this->getApplication()->find( 'install:carbon-fields');
 		$install_gravity_forms_utilities = $this->getApplication()->find( 'install:gravity-forms-utilities' );
@@ -37,5 +39,19 @@ class InstallHtmlBurgerEnv extends Command {
 		$install_gravity_forms_utilities->run( new ArrayInput( [
 			'command' => $install_gravity_forms_utilities->getName(),
 		] ), $output );
+
+		$composer_packages = [
+			'htmlburger/carbon-pagination' => '1.1.*',
+			'htmlburger/theme-help' => '^1.1.7',
+		];
+
+		foreach ( $composer_packages as $package_name => $version_constraint ) {
+			if ( Composer::installed( $directory, $package_name ) ) {
+				$output->writeln( '<failure>Composer package ' . $package_name . ' is already installed - skipped.</failure>' );
+				continue;
+			}
+
+			Composer::install( $directory, $package_name, $version_constraint );
+		}
 	}
 }
