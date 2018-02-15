@@ -18,7 +18,7 @@ class Bootstrap implements PresetInterface {
 	 * {@inheritDoc}
 	 */
 	public function execute( $directory, OutputInterface $output ) {
-		$install_output = $this->installNodePackage( $directory, 'bootstrap', '^3.3', true );
+		$install_output = $this->installNodePackage( $directory, 'bootstrap', '^4.0', true );
 
 		if ( $output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE ) {
 			$output->writeln( $install_output );
