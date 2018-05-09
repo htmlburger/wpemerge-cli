@@ -7,14 +7,15 @@
     "homepage": "https://wpemerge.com/",
     "authors": [
         {
-            "name": "htmlBurger",
-            "email": "wordpress@htmlburger.com",
-            "homepage": "https://htmlburger.com/",
+            "name": "Atanas Angelov",
+            "email": "atanas.angelov.dev@gmail.com",
+            "homepage": "https://github.com/atanas-angelov-dev/",
             "role": "Developer"
         },
         {
-            "name": "Atanas Angelov",
-            "email": "atanas.angelov.dev@gmail.com",
+            "name": "htmlBurger",
+            "email": "info@htmlburger.com",
+            "homepage": "http://htmlburger.com/",
             "role": "Developer"
         }
     ],
