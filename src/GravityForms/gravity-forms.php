@@ -23,7 +23,7 @@ function app_get_forms() {
 	 *
 	 * @param array $forms_ids The IDs of the Gravity Forms in the list.
 	 */
-	$form_ids = apply_filters( 'app_gravity_form_options', $forms_ids );
+	$forms_ids = apply_filters( 'app_gravity_form_options', $forms_ids );
 
 	return $forms_ids;
 }
