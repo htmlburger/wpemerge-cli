@@ -142,12 +142,13 @@ class App {
 	 *
 	 * @param  string      $command
 	 * @param  string|null $directory
+	 * @param  integer     $timeout
 	 * @return string
 	 */
-	public static function execute( $command, $directory = null ) {
+	public static function execute( $command, $directory = null, $timeout = 120 ) {
 		$directory = $directory !== null ? $directory : getcwd();
 
-		$process = new Process( $command );
+		$process = new Process( $command, null, null, null, $timeout );
 		$process->setWorkingDirectory( $directory );
 		$process->run();
 
