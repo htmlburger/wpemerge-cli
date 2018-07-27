@@ -2,7 +2,7 @@
 
 namespace WPEmerge\Cli\NodePackageManagers;
 
-use Exception;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Exception\RuntimeException;
 use WPEmerge\Cli\App;
@@ -18,15 +18,15 @@ class Proxy implements NodePackageManagerInterface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function install( $directory, $package, $version = null, $dev = false ) {
-		return call_user_func_array( [$this->getNodePackageManager(), 'install'], func_get_args() );
+	public function install( $directory, OutputInterface $output, $package, $version = null, $dev = false ) {
+		call_user_func_array( [$this->getNodePackageManager(), 'install'], func_get_args() );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function uninstall( $directory, $package, $dev = false ) {
-		return call_user_func_array( [$this->getNodePackageManager(), 'uninstall'], func_get_args() );
+	public function uninstall( $directory, OutputInterface $output, $package, $dev = false ) {
+		call_user_func_array( [$this->getNodePackageManager(), 'uninstall'], func_get_args() );
 	}
 
 	/**

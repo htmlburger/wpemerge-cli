@@ -2,6 +2,7 @@
 
 namespace WPEmerge\Cli\NodePackageManagers;
 
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Exception\RuntimeException;
 use WPEmerge\Cli\App;
 
@@ -29,26 +30,22 @@ class Yarn implements NodePackageManagerInterface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function install( $directory, $package, $version = null, $dev = false ) {
+	public function install( $directory, OutputInterface $output, $package, $version = null, $dev = false ) {
 		$command = 'yarn add ' .
 			'"' . $package .( $version !== null ? '@' . $version : '' ) . '"' .
 			( $dev ? ' --dev' : '' );
 
-		$output = App::execute( $command, $directory );
-
-		return trim( $output );
+		App::liveExecute( $command, $output, $directory );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function uninstall( $directory, $package, $dev = false ) {
+	public function uninstall( $directory, OutputInterface $output, $package, $dev = false ) {
 		$command = 'yarn remove ' .
 			$package .
 			( $dev ? ' --dev' : '' );
 
-		$output = App::execute( $command, $directory );
-
-		return trim( $output );
+		App::liveExecute( $command, $output, $directory );
 	}
 }

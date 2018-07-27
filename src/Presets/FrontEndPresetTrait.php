@@ -2,6 +2,7 @@
 
 namespace WPEmerge\Cli\Presets;
 
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Exception\RuntimeException;
 use WPEmerge\Cli\NodePackageManagers\Proxy;
 
@@ -11,20 +12,21 @@ trait FrontEndPresetTrait {
 	/**
 	 * Install a node package
 	 *
-	 * @param  string      $directory
-	 * @param  string      $package
-	 * @param  string|null $version
-	 * @param  boolean     $dev
-	 * @return string
+	 * @param  string          $directory
+	 * @param  OutputInterface $directory
+	 * @param  string          $package
+	 * @param  string|null     $version
+	 * @param  boolean         $dev
+	 * @return void
 	 */
-	protected function installNodePackage( $directory, $package, $version = null, $dev = false ) {
+	protected function installNodePackage( $directory, OutputInterface $output, $package, $version = null, $dev = false ) {
 		$package_manager = new Proxy();
 
 		if ( $package_manager->installed( $directory, $package ) ) {
 			throw new RuntimeException( 'Package is already installed.' );
 		}
 
-		return $package_manager->install( $directory, $package, $version, $dev );
+		$package_manager->install( $directory, $output, $package, $version, $dev );
 	}
 
 	/**

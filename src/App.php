@@ -150,12 +150,35 @@ class App {
 
 		$process = new Process( $command, null, null, null, $timeout );
 		$process->setWorkingDirectory( $directory );
-		$process->run();
+		$process->mustRun();
+
+		return $process->getOutput();
+	}
+
+	/**
+	 * Run a shell command and return the output as it comes in
+	 *
+	 * @param  string          $command
+	 * @param  OutputInterface $command
+	 * @param  string|null     $directory
+	 * @param  integer         $timeout
+	 * @return Process
+	 */
+	public static function liveExecute( $command, OutputInterface $output, $directory = null, $timeout = 120 ) {
+		$directory = $directory !== null ? $directory : getcwd();
+
+		$process = new Process( $command, null, null, null, $timeout );
+		$process->setWorkingDirectory( $directory );
+		$process->start();
+
+		$process->wait( function( $type, $buffer ) use ( $output ) {
+			$output->writeln( $buffer );
+		} );
 
 		if ( ! $process->isSuccessful() ) {
 			throw new ProcessFailedException( $process );
 		}
 
-		return $process->getOutput();
+		return $process;
 	}
 }

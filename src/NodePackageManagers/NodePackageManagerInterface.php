@@ -2,6 +2,8 @@
 
 namespace WPEmerge\Cli\NodePackageManagers;
 
+use Symfony\Component\Console\Output\OutputInterface;
+
 interface NodePackageManagerInterface {
 	/**
 	 * Check if a package is already installed
@@ -15,21 +17,23 @@ interface NodePackageManagerInterface {
 	/**
 	 * Install a package
 	 *
-	 * @param  string      $directory
-	 * @param  string      $package
-	 * @param  string|null $version
-	 * @param  boolean     $dev
-	 * @return string
+	 * @param  string          $directory
+	 * @param  OutputInterface $output
+	 * @param  string          $package
+	 * @param  string|null     $version
+	 * @param  boolean         $dev
+	 * @return void
 	 */
-	public function install( $directory, $package, $version = null, $dev = false );
+	public function install( $directory, OutputInterface $output, $package, $version = null, $dev = false );
 
 	/**
 	 * Uninstall a package
 	 *
-	 * @param  string  $directory
-	 * @param  string  $package
-	 * @param  boolean $dev
-	 * @return string
+	 * @param  string          $directory
+	 * @param  OutputInterface $output
+	 * @param  string          $package
+	 * @param  boolean         $dev
+	 * @return void
 	 */
-	public function uninstall( $directory, $package, $dev = false );
+	public function uninstall( $directory, OutputInterface $output, $package, $dev = false );
 }
