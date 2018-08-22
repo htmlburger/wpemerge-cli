@@ -36,7 +36,7 @@ trait FrontEndPresetTrait {
 	 * @return void
 	 */
 	protected function addCssVendorImport( $directory, $import ) {
-		$filepath = implode( DIRECTORY_SEPARATOR, [$directory, 'resources', 'styles', '_vendor.scss'] );
+		$filepath = implode( DIRECTORY_SEPARATOR, [$directory, 'resources', 'styles', 'theme', '_vendor.scss'] );
 		$statement = '@import \'~' . $import . '\';';
 
 		$this->appendUniqueStatement( $filepath, $statement );
