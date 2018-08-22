@@ -7,7 +7,7 @@ use Symfony\Component\Process\Exception\RuntimeException;
 use WPEmerge\Cli\Composer\Composer;
 
 class CarbonFields implements PresetInterface {
-	use BackEndPresetTrait;
+	use FilesystemTrait;
 
 	/**
 	 * Package name

@@ -4,7 +4,7 @@ namespace WPEmerge\Cli\Presets;
 
 use Symfony\Component\Console\Output\OutputInterface;
 
-class Normalize implements PresetInterface {
+class NormalizeCss implements PresetInterface {
 	use FrontEndPresetTrait;
 
 	/**

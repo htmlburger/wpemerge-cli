@@ -10,8 +10,9 @@ use Symfony\Component\Process\Exception\RuntimeException;
 use WPEmerge\Cli\Presets\Bootstrap;
 use WPEmerge\Cli\Presets\Bulma;
 use WPEmerge\Cli\Presets\Foundation;
-use WPEmerge\Cli\Presets\Normalize;
+use WPEmerge\Cli\Presets\NormalizeCss;
 use WPEmerge\Cli\Presets\Tachyons;
+use WPEmerge\Cli\Presets\TailwindCss;
 
 class InstallCssFramework extends Command {
 	/**
@@ -39,7 +40,7 @@ class InstallCssFramework extends Command {
 
 		switch ( $css_framework ) {
 			case 'Normalize.css':
-				$preset = new Normalize();
+				$preset = new NormalizeCss();
 				break;
 
 			case 'Bootstrap':
@@ -56,6 +57,10 @@ class InstallCssFramework extends Command {
 
 			case 'Tachyons':
 				$preset = new Tachyons();
+				break;
+
+			case 'Tailwind CSS':
+				$preset = new TailwindCss();
 				break;
 
 			default:

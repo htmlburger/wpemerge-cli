@@ -151,7 +151,7 @@ class Install extends Command {
 
 		$question = new ChoiceQuestion(
 			'Please select a CSS framework:',
-			['None', 'Normalize.css', 'Bootstrap', 'Bulma', 'Foundation', 'Tachyons'],
+			['None', 'Normalize.css', 'Bootstrap', 'Bulma', 'Foundation', 'Tachyons', 'Tailwind CSS'],
 			0
 		);
 

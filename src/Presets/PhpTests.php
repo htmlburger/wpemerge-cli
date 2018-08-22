@@ -7,7 +7,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use WPEmerge\Cli\Composer\Composer;
 
 class PhpTests implements PresetInterface {
-	use BackEndPresetTrait;
+	use FilesystemTrait;
 
 	/**
 	 * {@inheritDoc}

@@ -7,7 +7,7 @@ use Symfony\Component\Process\Exception\RuntimeException;
 use WPEmerge\Cli\NodePackageManagers\Proxy;
 
 trait FrontEndPresetTrait {
-	use StatementAppenderTrait;
+	use FilesystemTrait;
 
 	/**
 	 * Install a node package
