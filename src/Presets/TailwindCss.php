@@ -40,7 +40,9 @@ class TailwindCss implements PresetInterface {
 		}
 
 		$tailwind_bin_filepath = $this->path( $directory, 'node_modules', '.bin', 'tailwind' );
-		$tailwind_js_filepath = $this->path( $directory, 'resources', 'build', 'tailwind.js' );
-		App::execute( escapeshellarg( $tailwind_bin_filepath ) . ' init ' . escapeshellarg( $tailwind_js_filepath ), $directory );
+		$tailwind_js_filepath = $this->path( $directory, 'resources', 'build', 'tailwindcss.js' );
+		if ( ! file_exists( $tailwind_js_filepath ) ) {
+			App::execute( escapeshellarg( $tailwind_bin_filepath ) . ' init ' . escapeshellarg( $tailwind_js_filepath ), $directory );
+		}
 	}
 }
