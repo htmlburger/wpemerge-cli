@@ -11,8 +11,8 @@ trait PresetEnablerTrait {
 	 * @return void
 	 */
 	protected function enablePreset( $filepath, $preset ) {
-		$begin = sprintf( '~[\r\n]\s*/\* @preset-begin\(%1$s\).*?[\r\n]~mi', preg_quote( $preset, '~' ) );
-		$end = sprintf( '~[\r\n]\s*@preset-end\(%1$s\) \*/\s*?[\r\n]~mi', preg_quote( $preset, '~' ) );
+		$begin = sprintf( '~^\s*/\* @preset-begin\(%1$s\).*?\r?\n~mi', preg_quote( $preset, '~' ) );
+		$end = sprintf( '~^\s*@preset-end\(%1$s\) \*/\s*?\r?\n~mi', preg_quote( $preset, '~' ) );
 		$contents = file_get_contents( $filepath );
 
 		if ( ! preg_match( $begin, $contents ) || ! preg_match( $end, $contents ) ) {
