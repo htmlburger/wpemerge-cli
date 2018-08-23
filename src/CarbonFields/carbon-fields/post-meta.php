@@ -4,7 +4,7 @@
  *
  * Here, you can register custom post meta fields using the Carbon Fields library.
  *
- * @see https://carbonfields.net/docs/containers-post-meta/
+ * @link https://carbonfields.net/docs/containers-post-meta/
  *
  * @package WPEmergeCli
  */

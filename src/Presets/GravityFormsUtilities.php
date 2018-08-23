@@ -86,7 +86,7 @@ EOT
 /**
  * Disables the Confirmation Anchor on Gravity Forms.
  *
- * @see http://www.gravityhelp.com/documentation/page/Gform_confirmation_anchor
+ * @link http://www.gravityhelp.com/documentation/page/Gform_confirmation_anchor
  */
 add_filter( 'gform_confirmation_anchor', '__return_false' );
 EOT
@@ -99,7 +99,7 @@ EOT
 /**
  * Display an "Add Form" button above rich text fields on all custom field containers.
  *
- * @see http://www.gravityhelp.com/documentation/page/Gform_display_add_form_button
+ * @link http://www.gravityhelp.com/documentation/page/Gform_display_add_form_button
  */
 add_filter( 'gform_display_add_form_button', '__return_true' );
 EOT

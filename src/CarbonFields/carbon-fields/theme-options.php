@@ -4,7 +4,7 @@
  *
  * Here, you can register Theme Options using the Carbon Fields library.
  *
- * @see https://carbonfields.net/docs/containers-theme-options/
+ * @link https://carbonfields.net/docs/containers-theme-options/
  *
  * @package WPEmergeCli
  */
