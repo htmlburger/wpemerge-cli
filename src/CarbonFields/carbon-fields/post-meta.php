@@ -5,11 +5,14 @@
  * Here, you can register custom post meta fields using the Carbon Fields library.
  *
  * @see https://carbonfields.net/docs/containers-post-meta/
+ *
+ * @package WPEmergeCli
  */
 
 use Carbon_Fields\Container\Container;
 use Carbon_Fields\Field\Field;
 
+// phpcs:disable
 /*
 Container::make( 'post_meta', __( 'Custom Data', 'app' ) )
 	->where( 'post_type', '=', 'page' )
@@ -25,3 +28,4 @@ Container::make( 'post_meta', __( 'Custom Data', 'app' ) )
 		Field::make( 'file', 'crb_pdf' ),
 	));
 */
+// phpcs:enable
