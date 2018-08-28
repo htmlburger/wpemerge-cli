@@ -4,7 +4,7 @@ namespace WPEmerge\Cli\Presets;
 
 trait FilesystemTrait {
 	/**
-	 * Join path pieces with appropriate directory separator
+	 * Join path pieces with appropriate directory separator.
 	 *
 	 * @param  string $path,...
 	 * @return string
@@ -14,7 +14,7 @@ trait FilesystemTrait {
 	}
 
 	/**
-	 * Copy a list of files, returning an array of failures
+	 * Copy a list of files, returning an array of failures.
 	 *
 	 * @param  array $files
 	 * @return array
@@ -40,7 +40,32 @@ trait FilesystemTrait {
 	}
 
 	/**
-	 * Append a statement to file
+	 * Get the EOL character(s) for a given string from the its first line.
+	 * Returns PHP_EOL if no newline characters are found.
+	 *
+	 * @param  string  $string
+	 * @return string
+	 */
+	protected function getEol( $string ) {
+		$regex = '~[\s\S]*?([\r\n]+)[\s\S]*~m';
+		$eol = preg_replace( $regex, '$1', $string );
+		return strlen( $eol ) > 0 ? $eol : PHP_EOL;
+	}
+
+	/**
+	 * Get whether a string has a given statement present.
+	 *
+	 * @param  string  $haystack
+	 * @param  string  $needle
+	 * @return boolean
+	 */
+	protected function stringHasStatement( $haystack, $needle ) {
+		$regex = '~^\s*(' . preg_quote( $needle, '~' ) . ')\s*$~m';
+		return preg_match( $regex, $haystack );
+	}
+
+	/**
+	 * Append a statement to file.
 	 *
 	 * @param  string $filepath
 	 * @param  string $statement
@@ -48,19 +73,19 @@ trait FilesystemTrait {
 	 */
 	protected function appendUniqueStatement( $filepath, $statement ) {
 		$contents = file_get_contents( $filepath );
-		$regex = '~^\s*(' . preg_quote( $statement, '~' ) . ')\s*$~m';
 
-		if ( preg_match( $regex, $contents ) ) {
-			return; // statement already exists
+		if ( $this->stringHasStatement( $contents, $statement ) ) {
+			return;
 		}
 
+		$eol = $this->getEol( $contents );
 		$content_lines = explode( "\n", $contents );
 		$last_line = trim( $content_lines[ count( $content_lines ) - 1 ] );
 
 		if ( empty( $last_line ) ) {
-			$contents .= $statement . PHP_EOL;
+			$contents .= $statement . $eol;
 		} else {
-			$contents .= PHP_EOL . $statement;
+			$contents .= $eol . $statement;
 		}
 
 		file_put_contents( $filepath, $contents );
