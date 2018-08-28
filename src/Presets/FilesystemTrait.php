@@ -61,7 +61,7 @@ trait FilesystemTrait {
 	 */
 	protected function stringHasStatement( $haystack, $needle ) {
 		$regex = '~^\s*(' . preg_quote( $needle, '~' ) . ')\s*$~m';
-		return preg_match( $regex, $haystack );
+		return (bool) preg_match( $regex, $haystack );
 	}
 
 	/**
