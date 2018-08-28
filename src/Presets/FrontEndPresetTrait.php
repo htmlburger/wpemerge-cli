@@ -10,10 +10,10 @@ trait FrontEndPresetTrait {
 	use FilesystemTrait;
 
 	/**
-	 * Install a node package
+	 * Install a node package.
 	 *
 	 * @param  string          $directory
-	 * @param  OutputInterface $directory
+	 * @param  OutputInterface $output
 	 * @param  string          $package
 	 * @param  string|null     $version
 	 * @param  boolean         $dev
@@ -30,14 +30,29 @@ trait FrontEndPresetTrait {
 	}
 
 	/**
-	 * Install a node package
+	 * Add an @import statement to the _vendor.scss file.
 	 *
+	 * @param  string $directory
 	 * @param  string $import
 	 * @return void
 	 */
 	protected function addCssVendorImport( $directory, $import ) {
-		$filepath = implode( DIRECTORY_SEPARATOR, [$directory, 'resources', 'styles', 'theme', '_vendor.scss'] );
-		$statement = '@import \'~' . $import . '\';';
+		$filepath = $this->path( $directory, 'resources', 'styles', 'theme', '_vendor.scss' );
+		$statement = "@import '~$import';";
+
+		$this->appendUniqueStatement( $filepath, $statement );
+	}
+
+	/**
+	 * Add an import statement to the vendor.js file.
+	 *
+	 * @param  string $directory
+	 * @param  string $import
+	 * @return void
+	 */
+	protected function addJsVendorImport( $directory, $import ) {
+		$filepath = $this->path( $directory, 'resources', 'scripts', 'theme', 'vendor.js' );
+		$statement = "import '$import';";
 
 		$this->appendUniqueStatement( $filepath, $statement );
 	}
