@@ -95,6 +95,7 @@ class App {
 		$event->getIO()->write( '' );
 
 		$process = new Process( $binary . ' config:create' );
+		$process->run();
 	}
 
 	/**
