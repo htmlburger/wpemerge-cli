@@ -18,7 +18,7 @@ class Tachyons implements PresetInterface {
 	 * {@inheritDoc}
 	 */
 	public function execute( $directory, OutputInterface $output ) {
-		$this->installNodePackage( $directory, $output, 'tachyons', '^4.9', true );
+		$this->installNodePackage( $directory, $output, 'tachyons', '^4.9' );
 		$this->addCssVendorImport( $directory, 'tachyons/css/tachyons.css' );
 	}
 }

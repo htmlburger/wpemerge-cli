@@ -18,7 +18,7 @@ class NormalizeCss implements PresetInterface {
 	 * {@inheritDoc}
 	 */
 	public function execute( $directory, OutputInterface $output ) {
-		$this->installNodePackage( $directory, $output, 'normalize.css', '^8.0', true );
+		$this->installNodePackage( $directory, $output, 'normalize.css', '^8.0' );
 		$this->addCssVendorImport( $directory, 'normalize.css/normalize.css' );
 	}
 }

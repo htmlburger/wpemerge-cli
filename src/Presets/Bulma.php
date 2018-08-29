@@ -18,7 +18,7 @@ class Bulma implements PresetInterface {
 	 * {@inheritDoc}
 	 */
 	public function execute( $directory, OutputInterface $output ) {
-		$this->installNodePackage( $directory, $output, 'bulma', '^0.6', true );
+		$this->installNodePackage( $directory, $output, 'bulma', '^0.6' );
 		$this->addCssVendorImport( $directory, 'bulma/css/bulma.css' );
 	}
 }

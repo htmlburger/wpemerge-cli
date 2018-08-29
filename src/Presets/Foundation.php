@@ -18,7 +18,7 @@ class Foundation implements PresetInterface {
 	 * {@inheritDoc}
 	 */
 	public function execute( $directory, OutputInterface $output ) {
-		$this->installNodePackage( $directory, $output, 'foundation-sites', '^6.4', true );
+		$this->installNodePackage( $directory, $output, 'foundation-sites', '^6.4' );
 		$this->addCssVendorImport( $directory, 'foundation-sites/dist/css/foundation.css' );
 	}
 }

@@ -18,7 +18,7 @@ class FontAwesome implements PresetInterface {
 	 * {@inheritDoc}
 	 */
 	public function execute( $directory, OutputInterface $output ) {
-		$this->installNodePackage( $directory, $output, 'font-awesome', '^4.7', true );
+		$this->installNodePackage( $directory, $output, 'font-awesome', '^4.7' );
 		$this->addCssVendorImport( $directory, 'font-awesome/css/font-awesome.css' );
 	}
 }
