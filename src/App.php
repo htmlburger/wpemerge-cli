@@ -13,6 +13,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Exception\RuntimeException;
 use Symfony\Component\Process\Process;
+use WPEmerge\Cli\Commands\CreateConfigJson;
 use WPEmerge\Cli\Commands\Install;
 use WPEmerge\Cli\Commands\InstallCarbonFields;
 use WPEmerge\Cli\Commands\InstallCleanComposer;
@@ -28,7 +29,7 @@ use WPEmerge\Cli\Composer\Composer;
 
 class App {
 	/**
-	 * Run the application
+	 * Run the application.
 	 *
 	 * @return void
 	 */
@@ -56,7 +57,7 @@ class App {
 	}
 
 	/**
-	 * Run with the install command
+	 * Run with the install command.
 	 *
 	 * @return void
 	 */
@@ -83,7 +84,21 @@ class App {
 	}
 
 	/**
-	 * Create the application
+	 * Create a config.json in the theme root directory.
+	 *
+	 * @return void
+	 */
+	public static function createConfigJson( Event $event ) {
+		$binary_name = 'wpemerge';
+		$binary = dirname( __DIR__ ) . DIRECTORY_SEPARATOR . 'bin' . DIRECTORY_SEPARATOR . $binary_name;
+
+		$event->getIO()->write( '' );
+
+		$process = new Process( $binary . ' config:create' );
+	}
+
+	/**
+	 * Create the application.
 	 *
 	 * @return Application
 	 */
@@ -92,6 +107,7 @@ class App {
 
 		$application = new Application( 'WPEmerge CLI', $composer['version'] );
 
+		$application->add( new CreateConfigJson() );
 		$application->add( new Install() );
 		$application->add( new InstallCarbonFields() );
 		$application->add( new InstallCleanComposer() );
@@ -108,7 +124,7 @@ class App {
 	}
 
 	/**
-	 * Decorate output object
+	 * Decorate output object.
 	 *
 	 * @param  OutputInterface $output
 	 * @return void
@@ -118,7 +134,7 @@ class App {
 	}
 
 	/**
-	 * Check if a directory is a WordPress theme root
+	 * Check if a directory is a WordPress theme root.
 	 *
 	 * @param  string  $directory
 	 * @return boolean
@@ -138,7 +154,7 @@ class App {
 	}
 
 	/**
-	 * Run a shell command
+	 * Run a shell command.
 	 *
 	 * @param  string      $command
 	 * @param  string|null $directory
@@ -156,7 +172,7 @@ class App {
 	}
 
 	/**
-	 * Run a shell command and return the output as it comes in
+	 * Run a shell command and return the output as it comes in.
 	 *
 	 * @param  string          $command
 	 * @param  OutputInterface $command
