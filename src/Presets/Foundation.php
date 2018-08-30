@@ -19,6 +19,10 @@ class Foundation implements PresetInterface {
 	 */
 	public function execute( $directory, OutputInterface $output ) {
 		$this->installNodePackage( $directory, $output, 'foundation-sites', '^6.4' );
-		$this->addCssVendorImport( $directory, 'foundation-sites/dist/css/foundation.css' );
+
+		$this->copy([
+			$this->path( WPEMERGE_CLI_DIR, 'src', 'Foundation', 'foundation.js' )
+			=> $this->path( $directory, 'resources', 'scripts', 'theme', 'vendor', 'foundation.js' ),
+		]);
 	}
 }

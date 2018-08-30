@@ -20,8 +20,10 @@ class Bootstrap implements PresetInterface {
 	public function execute( $directory, OutputInterface $output ) {
 		$this->installNodePackage( $directory, $output, 'popper.js', '^1.14' );
 		$this->installNodePackage( $directory, $output, 'bootstrap', '^4.0' );
-		$this->addJsVendorImport( $directory, 'popper.js' );
-		$this->addJsVendorImport( $directory, 'bootstrap' );
-		$this->addCssVendorImport( $directory, 'bootstrap/dist/css/bootstrap.css' );
+
+		$this->copy([
+			$this->path( WPEMERGE_CLI_DIR, 'src', 'Bootstrap', 'bootstrap.js' )
+				=> $this->path( $directory, 'resources', 'scripts', 'theme', 'vendor', 'bootstrap.js' ),
+		]);
 	}
 }

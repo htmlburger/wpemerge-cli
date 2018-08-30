@@ -19,6 +19,10 @@ class Tachyons implements PresetInterface {
 	 */
 	public function execute( $directory, OutputInterface $output ) {
 		$this->installNodePackage( $directory, $output, 'tachyons', '^4.9' );
-		$this->addCssVendorImport( $directory, 'tachyons/css/tachyons.css' );
+
+		$this->copy([
+			$this->path( WPEMERGE_CLI_DIR, 'src', 'Tachyons', 'tachyons.js' )
+			=> $this->path( $directory, 'resources', 'scripts', 'theme', 'vendor', 'tachyons.js' ),
+		]);
 	}
 }

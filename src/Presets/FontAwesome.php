@@ -19,6 +19,10 @@ class FontAwesome implements PresetInterface {
 	 */
 	public function execute( $directory, OutputInterface $output ) {
 		$this->installNodePackage( $directory, $output, 'font-awesome', '^4.7' );
-		$this->addCssVendorImport( $directory, 'font-awesome/css/font-awesome.css' );
+
+		$this->copy([
+			$this->path( WPEMERGE_CLI_DIR, 'src', 'FontAwesome', 'fontawesome.js' )
+			=> $this->path( $directory, 'resources', 'scripts', 'theme', 'vendor', 'fontawesome.js' ),
+		]);
 	}
 }

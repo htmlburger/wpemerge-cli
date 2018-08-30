@@ -19,6 +19,10 @@ class Bulma implements PresetInterface {
 	 */
 	public function execute( $directory, OutputInterface $output ) {
 		$this->installNodePackage( $directory, $output, 'bulma', '^0.6' );
-		$this->addCssVendorImport( $directory, 'bulma/css/bulma.css' );
+
+		$this->copy([
+			$this->path( WPEMERGE_CLI_DIR, 'src', 'Bulma', 'bulma.js' )
+			=> $this->path( $directory, 'resources', 'scripts', 'theme', 'vendor', 'bulma.js' ),
+		]);
 	}
 }
