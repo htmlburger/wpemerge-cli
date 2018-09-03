@@ -18,7 +18,7 @@ class FontAwesome implements PresetInterface {
 	 * {@inheritDoc}
 	 */
 	public function execute( $directory, OutputInterface $output ) {
-		$this->installNodePackage( $directory, $output, 'font-awesome', '^4.7' );
+		$this->installNodePackage( $directory, $output, '@fortawesome/fontawesome-free', '^5.3.1' );
 
 		$this->copy([
 			$this->path( WPEMERGE_CLI_DIR, 'src', 'FontAwesome', 'fontawesome.js' )
