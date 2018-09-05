@@ -31,8 +31,8 @@ class App {
 	/**
 	 * Run the application.
 	 *
-	 * @param  Input  $input
-	 * @param  Output $output
+	 * @param  Input|null  $input
+	 * @param  Output|null $output
 	 * @return void
 	 */
 	public static function run( Input $input = null, Output $output = null ) {
