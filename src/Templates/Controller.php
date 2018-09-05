@@ -2,8 +2,6 @@
 
 namespace WPEmerge\Cli\Templates;
 
-use Symfony\Component\Console\Exception\InvalidArgumentException;
-
 class Controller extends Template {
 	/**
 	 * {@inheritDoc}

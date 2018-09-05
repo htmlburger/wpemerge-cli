@@ -2,9 +2,7 @@
 
 namespace WPEmerge\Cli\Presets;
 
-use Symfony\Component\Process\Exception\RuntimeException;
 use Symfony\Component\Console\Output\OutputInterface;
-use WPEmerge\Cli\Composer\Composer;
 
 class PhpTests implements PresetInterface {
 	use FilesystemTrait;

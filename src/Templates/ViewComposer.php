@@ -2,8 +2,6 @@
 
 namespace WPEmerge\Cli\Templates;
 
-use Symfony\Component\Console\Exception\InvalidArgumentException;
-
 class ViewComposer extends Template {
 	/**
 	 * {@inheritDoc}

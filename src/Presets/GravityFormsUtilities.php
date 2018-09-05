@@ -2,7 +2,6 @@
 
 namespace WPEmerge\Cli\Presets;
 
-use Symfony\Component\Process\Exception\RuntimeException;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class GravityFormsUtilities implements PresetInterface {

@@ -31,6 +31,8 @@ class App {
 	/**
 	 * Run the application.
 	 *
+	 * @param  Input  $input
+	 * @param  Output $output
 	 * @return void
 	 */
 	public static function run( Input $input = null, Output $output = null ) {
@@ -59,6 +61,7 @@ class App {
 	/**
 	 * Run with the install command.
 	 *
+	 * @param  Event $event
 	 * @return void
 	 */
 	public static function install( Event $event ) {
@@ -86,6 +89,7 @@ class App {
 	/**
 	 * Create a config.json in the theme root directory.
 	 *
+	 * @param  Event $event
 	 * @return void
 	 */
 	public static function createConfigJson( Event $event ) {
@@ -176,7 +180,7 @@ class App {
 	 * Run a shell command and return the output as it comes in.
 	 *
 	 * @param  string          $command
-	 * @param  OutputInterface $command
+	 * @param  OutputInterface $output
 	 * @param  string|null     $directory
 	 * @param  integer         $timeout
 	 * @return Process

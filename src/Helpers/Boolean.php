@@ -28,7 +28,7 @@ class Boolean {
 			}
 		}
 
-		// rely on PHP's strnig to boolean conversion in all other cases
+		// rely on PHP's string to boolean conversion in all other cases
 		return (bool) $string;
 	}
 }

@@ -44,7 +44,7 @@ class App_Tests_Bootstrap {
 	 * @return App_Tests_Bootstrap
 	 */
 	public static function instance() {
-		if ( is_null( static::$instance ) ) {
+		if ( static::$instance === null ) {
 			static::$instance = new static();
 		}
 
@@ -68,7 +68,7 @@ class App_Tests_Bootstrap {
 	 * Load the plugin
 	 */
 	public function load_plugin() {
-		require_once( $this->theme_directory . '/vendor/autoload.php' );
+		require_once $this->theme_directory . '/vendor/autoload.php';
 	}
 
 	/**
@@ -76,13 +76,13 @@ class App_Tests_Bootstrap {
 	 */
 	public function boot() {
 		// load test function so tests_add_filter() is available
-		require_once( $this->wp_tests_directory . '/includes/functions.php' );
+		require_once $this->wp_tests_directory . '/includes/functions.php';
 
 		// load plugin
 		tests_add_filter( 'muplugins_loaded', array( $this, 'load_plugin' ) );
 
 		// load the WP testing environment
-		require_once( $this->wp_tests_directory . '/includes/bootstrap.php' );
+		require_once $this->wp_tests_directory . '/includes/bootstrap.php';
 
 		// make sure query vars are prepared
 		global $wp;
