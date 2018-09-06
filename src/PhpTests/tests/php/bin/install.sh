@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
-# See https://github.com/wp-cli/wp-cli/blob/master/templates/install-wp-tests.sh
+# Modified version of WP CLI install script
+# https://github.com/wp-cli/wp-cli/blob/master/templates/install-wp-tests.sh
+# Copyright (C) 2011-2018 WP-CLI Development Group (https://github.com/wp-cli/wp-cli/contributors)
 
 # MySQL settings
 if [ $# -lt 3 ]; then
