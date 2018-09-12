@@ -102,9 +102,14 @@ class App {
 		$input = new ArrayInput( [ 'config:create' ] );
 		$output = new BufferedOutput();
 
-		static::run( $input, $output );
-
-		$event->getIO()->write( $output->fetch() );
+		try {
+			$application = static::create();
+			$command = $application->find('config:create');
+			$command->run( $input, $output );
+			$event->getIO()->write( $output->fetch() );
+		} catch ( RuntimeException $e ) {
+			$event->getIO()->write( '<error>' . $e->getMessage() . '</error>' );
+		}
 	}
 
 	/**
