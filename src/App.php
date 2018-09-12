@@ -5,8 +5,10 @@ namespace WPEmerge\Cli;
 use Composer\EventDispatcher\Event;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
+use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\Input;
+use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\Output;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -93,13 +95,16 @@ class App {
 	 * @return void
 	 */
 	public static function createConfigJson( Event $event ) {
-		$binary_name = 'wpemerge';
-		$binary = dirname( __DIR__ ) . DIRECTORY_SEPARATOR . 'bin' . DIRECTORY_SEPARATOR . $binary_name;
+		if ( ! defined( 'WPEMERGE_CLI_DIR' ) ) {
+			define( 'WPEMERGE_CLI_DIR', dirname( __DIR__ ) );
+		}
 
-		$event->getIO()->write( '' );
+		$input = new ArrayInput( [ 'config:create' ] );
+		$output = new BufferedOutput();
 
-		$process = new Process( $binary . ' config:create' );
-		$process->run();
+		static::run( $input, $output );
+
+		$event->getIO()->write( $output->fetch() );
 	}
 
 	/**
