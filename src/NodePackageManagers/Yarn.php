@@ -11,12 +11,12 @@ class Yarn implements NodePackageManagerInterface {
 	 * {@inheritDoc}
 	 */
 	public function installed( $directory, $package ) {
-		$command = 'yarn list ' . $package . ' --depth=0 --json';
+		$command = 'yarn list ' . escapeshellarg( $package ) . ' --depth=0 --json';
 
 		$output = App::execute( $command, $directory );
 		$json = @json_decode( trim( $output ), true );
 
-		if ( ! $json ) {
+		if ( $json === null ) {
 			throw new RuntimeException( 'Could not determine if the ' . $package . ' package is already installed.' );
 		}
 
@@ -32,7 +32,7 @@ class Yarn implements NodePackageManagerInterface {
 	 */
 	public function install( $directory, OutputInterface $output, $package, $version = null, $dev = false ) {
 		$command = 'yarn add ' .
-			'"' . $package .( $version !== null ? '@' . $version : '' ) . '"' .
+			'"' . escapeshellarg( $package ) . ( $version !== null ? '@' . $version : '' ) . '"' .
 			( $dev ? ' --dev' : '' );
 
 		App::liveExecute( $command, $output, $directory );
@@ -43,7 +43,7 @@ class Yarn implements NodePackageManagerInterface {
 	 */
 	public function uninstall( $directory, OutputInterface $output, $package, $dev = false ) {
 		$command = 'yarn remove ' .
-			$package .
+			escapeshellarg( $package ) .
 			( $dev ? ' --dev' : '' );
 
 		App::liveExecute( $command, $output, $directory );

@@ -3,6 +3,7 @@
 namespace WPEmerge\Cli\NodePackageManagers;
 
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Exception\RuntimeException;
 use WPEmerge\Cli\App;
 
@@ -11,12 +12,17 @@ class Npm implements NodePackageManagerInterface {
 	 * {@inheritDoc}
 	 */
 	public function installed( $directory, $package ) {
-		$command = 'npm list ' . $package . ' --json';
+		$command = 'npm list ' . escapeshellarg( $package ) . ' --json';
 
-		$output = App::execute( $command, $directory );
+		try {
+			$output = App::execute( $command, $directory );
+		} catch ( ProcessFailedException $exception ) {
+			$output = $exception->getProcess()->getOutput();
+		}
+
 		$json = @json_decode( trim( $output ), true );
 
-		if ( ! $json ) {
+		if ( $json === null ) {
 			throw new RuntimeException( 'Could not determine if the ' . $package . ' package is already installed.' );
 		}
 
@@ -32,7 +38,7 @@ class Npm implements NodePackageManagerInterface {
 	 */
 	public function install( $directory, OutputInterface $output, $package, $version = null, $dev = false ) {
 		$command = 'npm install ' .
-			'"' . $package .( $version !== null ? '@' . $version : '' ) . '"' .
+			'"' . escapeshellarg( $package ) . ( $version !== null ? '@' . $version : '' ) . '"' .
 			( $dev ? ' --only=dev' : '' );
 
 		App::liveExecute( $command, $output, $directory );
@@ -43,7 +49,7 @@ class Npm implements NodePackageManagerInterface {
 	 */
 	public function uninstall( $directory, OutputInterface $output, $package, $dev = false ) {
 		$command = 'npm uninstall ' .
-			$package .
+			escapeshellarg( $package ) .
 			( $dev ? ' --only=dev' : '' );
 
 		App::liveExecute( $command, $output, $directory );
