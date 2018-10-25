@@ -35,13 +35,14 @@ class Proxy implements NodePackageManagerInterface {
 	 * @return NodePackageManagerInterface
 	 */
 	protected function getNodePackageManager() {
+		$is_windows = strtolower( substr( PHP_OS, 0, 3 ) ) === 'win';
 		$node_package_managers = [
 			'yarn' => Yarn::class,
 			'npm' => Npm::class,
 		];
 
 		foreach ( $node_package_managers as $manager => $class ) {
-			$command = 'which ' . $manager;
+			$command = $is_windows ? 'where ' . escapeshellarg( $manager ) : 'which ' . escapeshellarg( $manager );
 
 			try {
 				$output = App::execute( $command );
