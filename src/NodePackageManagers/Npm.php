@@ -38,7 +38,7 @@ class Npm implements NodePackageManagerInterface {
 	 */
 	public function install( $directory, OutputInterface $output, $package, $version = null, $dev = false ) {
 		$command = 'npm install ' .
-			'"' . escapeshellarg( $package ) . ( $version !== null ? '@' . $version : '' ) . '"' .
+			'"' . $package . ( $version !== null ? '@' . $version : '' ) . '"' .
 			( $dev ? ' --only=dev' : '' );
 
 		App::liveExecute( $command, $output, $directory );

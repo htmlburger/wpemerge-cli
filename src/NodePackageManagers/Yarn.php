@@ -32,7 +32,7 @@ class Yarn implements NodePackageManagerInterface {
 	 */
 	public function install( $directory, OutputInterface $output, $package, $version = null, $dev = false ) {
 		$command = 'yarn add ' .
-			'"' . escapeshellarg( $package ) . ( $version !== null ? '@' . $version : '' ) . '"' .
+			'"' . $package . ( $version !== null ? '@' . $version : '' ) . '"' .
 			( $dev ? ' --dev' : '' );
 
 		App::liveExecute( $command, $output, $directory );
