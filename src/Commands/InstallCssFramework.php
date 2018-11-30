@@ -11,6 +11,7 @@ use WPEmerge\Cli\Presets\Bootstrap;
 use WPEmerge\Cli\Presets\Bulma;
 use WPEmerge\Cli\Presets\Foundation;
 use WPEmerge\Cli\Presets\NormalizeCss;
+use WPEmerge\Cli\Presets\Spectre;
 use WPEmerge\Cli\Presets\Tachyons;
 use WPEmerge\Cli\Presets\TailwindCss;
 
@@ -61,6 +62,10 @@ class InstallCssFramework extends Command {
 
 			case 'Tailwind CSS':
 				$preset = new TailwindCss();
+				break;
+
+			case 'Spectre.css':
+				$preset = new Spectre();
 				break;
 
 			default:
