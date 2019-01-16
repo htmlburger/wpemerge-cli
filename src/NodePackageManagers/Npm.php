@@ -41,7 +41,7 @@ class Npm implements NodePackageManagerInterface {
 			'"' . $package . ( $version !== null ? '@' . $version : '' ) . '"' .
 			( $dev ? ' --only=dev' : '' );
 
-		App::liveExecute( $command, $output, $directory );
+		App::liveExecute( $command, $output, $directory, 600 );
 	}
 
 	/**
@@ -52,6 +52,6 @@ class Npm implements NodePackageManagerInterface {
 			escapeshellarg( $package ) .
 			( $dev ? ' --only=dev' : '' );
 
-		App::liveExecute( $command, $output, $directory );
+		App::liveExecute( $command, $output, $directory, 600 );
 	}
 }

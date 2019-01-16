@@ -35,7 +35,7 @@ class Yarn implements NodePackageManagerInterface {
 			'"' . $package . ( $version !== null ? '@' . $version : '' ) . '"' .
 			( $dev ? ' --dev' : '' );
 
-		App::liveExecute( $command, $output, $directory );
+		App::liveExecute( $command, $output, $directory, 600 );
 	}
 
 	/**
@@ -46,6 +46,6 @@ class Yarn implements NodePackageManagerInterface {
 			escapeshellarg( $package ) .
 			( $dev ? ' --dev' : '' );
 
-		App::liveExecute( $command, $output, $directory );
+		App::liveExecute( $command, $output, $directory, 600 );
 	}
 }
