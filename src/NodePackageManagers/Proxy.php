@@ -30,6 +30,20 @@ class Proxy implements NodePackageManagerInterface {
 	}
 
 	/**
+	 * {@inheritDoc}
+	 */
+	public function installAll( $directory, OutputInterface $output ) {
+		call_user_func_array( [$this->getNodePackageManager(), 'installAll'], func_get_args() );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function run( $directory, OutputInterface $output, $script ) {
+		call_user_func_array( [$this->getNodePackageManager(), 'run'], func_get_args() );
+	}
+
+	/**
 	 * Get an instance of the first available package manager
 	 *
 	 * @return NodePackageManagerInterface

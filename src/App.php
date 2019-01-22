@@ -15,11 +15,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Exception\RuntimeException;
 use Symfony\Component\Process\Process;
+use WPEmerge\Cli\Commands\AssetsBuild;
 use WPEmerge\Cli\Commands\CreateConfigJson;
 use WPEmerge\Cli\Commands\Install;
 use WPEmerge\Cli\Commands\InstallCarbonFields;
 use WPEmerge\Cli\Commands\InstallCleanComposer;
 use WPEmerge\Cli\Commands\InstallCssFramework;
+use WPEmerge\Cli\Commands\InstallDependencies;
 use WPEmerge\Cli\Commands\InstallFontAwesome;
 use WPEmerge\Cli\Commands\InstallGravityFormsUtilities;
 use WPEmerge\Cli\Commands\InstallHtmlBurgerEnv;
@@ -113,6 +115,52 @@ class App {
 	}
 
 	/**
+	 * Install dependencies in the theme root directory.
+	 *
+	 * @param  Event $event
+	 * @return void
+	 */
+	public static function installDependencies( Event $event ) {
+		if ( ! defined( 'WPEMERGE_CLI_DIR' ) ) {
+			define( 'WPEMERGE_CLI_DIR', dirname( __DIR__ ) );
+		}
+
+		$input = new ArrayInput( [ 'install:dependencies' ] );
+		$output = new ConsoleOutput();
+
+		try {
+			$application = static::create();
+			$command = $application->find('install:dependencies');
+			$command->run( $input, $output );
+		} catch ( RuntimeException $e ) {
+			$event->getIO()->write( '<error>' . $e->getMessage() . '</error>' );
+		}
+	}
+
+	/**
+	 * Build assets in the theme root directory.
+	 *
+	 * @param  Event $event
+	 * @return void
+	 */
+	public static function buildAssets( Event $event ) {
+		if ( ! defined( 'WPEMERGE_CLI_DIR' ) ) {
+			define( 'WPEMERGE_CLI_DIR', dirname( __DIR__ ) );
+		}
+
+		$input = new ArrayInput( [ 'assets:build' ] );
+		$output = new ConsoleOutput();
+
+		try {
+			$application = static::create();
+			$command = $application->find('assets:build');
+			$command->run( $input, $output );
+		} catch ( RuntimeException $e ) {
+			$event->getIO()->write( '<error>' . $e->getMessage() . '</error>' );
+		}
+	}
+
+	/**
 	 * Create the application.
 	 *
 	 * @return Application
@@ -122,11 +170,13 @@ class App {
 
 		$application = new Application( 'WPEmerge CLI', $composer['version'] );
 
+		$application->add( new AssetsBuild() );
 		$application->add( new CreateConfigJson() );
 		$application->add( new Install() );
 		$application->add( new InstallCarbonFields() );
 		$application->add( new InstallCleanComposer() );
 		$application->add( new InstallCssFramework() );
+		$application->add( new InstallDependencies() );
 		$application->add( new InstallFontAwesome() );
 		$application->add( new InstallGravityFormsUtilities() );
 		$application->add( new InstallHtmlBurgerEnv() );

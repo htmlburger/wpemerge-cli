@@ -6,7 +6,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 interface NodePackageManagerInterface {
 	/**
-	 * Check if a package is already installed
+	 * Check if a package is already installed.
 	 *
 	 * @param  string      $directory
 	 * @param  string      $package
@@ -15,7 +15,7 @@ interface NodePackageManagerInterface {
 	public function installed( $directory, $package );
 
 	/**
-	 * Install a package
+	 * Install a package.
 	 *
 	 * @param  string          $directory
 	 * @param  OutputInterface $output
@@ -27,7 +27,7 @@ interface NodePackageManagerInterface {
 	public function install( $directory, OutputInterface $output, $package, $version = null, $dev = false );
 
 	/**
-	 * Uninstall a package
+	 * Uninstall a package.
 	 *
 	 * @param  string          $directory
 	 * @param  OutputInterface $output
@@ -36,4 +36,23 @@ interface NodePackageManagerInterface {
 	 * @return void
 	 */
 	public function uninstall( $directory, OutputInterface $output, $package, $dev = false );
+
+	/**
+	 * Install all packages.
+	 *
+	 * @param  string          $directory
+	 * @param  OutputInterface $output
+	 * @return void
+	 */
+	public function installAll( $directory, OutputInterface $output );
+
+	/**
+	 * Run a script.
+	 *
+	 * @param  string          $directory
+	 * @param  OutputInterface $output
+	 * @param  string          $script
+	 * @return void
+	 */
+	public function run( $directory, OutputInterface $output, $script );
 }

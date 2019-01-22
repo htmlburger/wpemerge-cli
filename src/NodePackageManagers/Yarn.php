@@ -48,4 +48,22 @@ class Yarn implements NodePackageManagerInterface {
 
 		App::liveExecute( $command, $output, $directory, 600 );
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function installAll( $directory, OutputInterface $output ) {
+		$command = 'yarn install';
+
+		App::liveExecute( $command, $output, $directory, 600 );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function run( $directory, OutputInterface $output, $script ) {
+		$command = 'yarn run ' . $script;
+
+		App::liveExecute( $command, $output, $directory, 600 );
+	}
 }

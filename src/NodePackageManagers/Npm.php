@@ -54,4 +54,22 @@ class Npm implements NodePackageManagerInterface {
 
 		App::liveExecute( $command, $output, $directory, 600 );
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function installAll( $directory, OutputInterface $output ) {
+		$command = 'npm install';
+
+		App::liveExecute( $command, $output, $directory, 600 );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function run( $directory, OutputInterface $output, $script ) {
+		$command = 'npm run ' . $script;
+
+		App::liveExecute( $command, $output, $directory, 600 );
+	}
 }
