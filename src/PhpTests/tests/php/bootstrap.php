@@ -32,13 +32,6 @@ class App_Tests_Bootstrap {
 	public $tests_directory;
 
 	/**
-	 * Library directory.
-	 *
-	 * @var string
-	 */
-	public $library_directory;
-
-	/**
 	 * Get the single tests boostrap instance
 	 *
 	 * @return App_Tests_Bootstrap
@@ -59,9 +52,12 @@ class App_Tests_Bootstrap {
 		error_reporting( E_ALL );
 
 		$this->theme_directory = dirname( dirname( __DIR__ ) );
-		$this->library_directory = dirname( __DIR__ );
 		$this->tests_directory = __DIR__;
-		$this->wp_tests_directory = getenv( 'WP_TESTS_DIR' ) ? getenv( 'WP_TESTS_DIR' ) : $this->tests_directory . '/environment/wordpress-tests-lib';
+		$this->wp_tests_directory = $this->tests_directory . '/environment/wordpress-tests-lib';
+
+		if ( ! defined( 'SCRIPT_DEBUG' ) ) {
+			define( 'SCRIPT_DEBUG', false );
+		}
 	}
 
 	/**
