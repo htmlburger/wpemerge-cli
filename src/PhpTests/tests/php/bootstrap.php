@@ -11,7 +11,7 @@ class App_Tests_Bootstrap {
 	protected static $instance = null;
 
 	/**
-	 * Directory where wordpress-tests-lib is installed
+	 * Directory where wordpress-tests-lib is installed.
 	 *
 	 * @var string
 	 */
@@ -32,7 +32,7 @@ class App_Tests_Bootstrap {
 	public $tests_directory;
 
 	/**
-	 * Get the single tests boostrap instance
+	 * Get the single tests bootstrap instance.
 	 *
 	 * @return App_Tests_Bootstrap
 	 */
@@ -45,7 +45,7 @@ class App_Tests_Bootstrap {
 	}
 
 	/**
-	 * Setup the unit testing environment
+	 * Setup the unit testing environment.
 	 */
 	private function __construct() {
 		ini_set( 'display_errors','on' );
@@ -61,16 +61,16 @@ class App_Tests_Bootstrap {
 	}
 
 	/**
-	 * Load the plugin
+	 * Load the plugin.
 	 */
 	public function load_plugin() {
 		require_once $this->theme_directory . '/vendor/autoload.php';
 	}
 
 	/**
-	 * Load the plugin
+	 * Load the plugin.
 	 */
-	public function boot() {
+	public function bootstrap() {
 		// load test function so tests_add_filter() is available
 		require_once $this->wp_tests_directory . '/includes/functions.php';
 
@@ -88,4 +88,4 @@ class App_Tests_Bootstrap {
 	}
 }
 
-App_Tests_Bootstrap::instance()->boot();
+App_Tests_Bootstrap::instance()->bootstrap();

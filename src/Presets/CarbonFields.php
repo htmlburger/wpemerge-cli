@@ -127,14 +127,14 @@ EOT
 		$this->appendUniqueStatement(
 			$hooks_filepath,
 			<<<'EOT'
-add_action( 'after_setup_theme', 'app_boot_carbon_fields', 100 );
+add_action( 'after_setup_theme', 'app_bootstrap_carbon_fields', 100 );
 EOT
 		);
 
 		$this->appendUniqueStatement(
 			$hooks_filepath,
 			<<<'EOT'
-add_action( 'carbon_fields_register_fields', 'app_boot_carbon_fields_register_fields' );
+add_action( 'carbon_fields_register_fields', 'app_bootstrap_carbon_fields_register_fields' );
 EOT
 		);
 
