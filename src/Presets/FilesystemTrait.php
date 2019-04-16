@@ -47,8 +47,8 @@ trait FilesystemTrait {
 	 * @return string
 	 */
 	protected function getEol( $string ) {
-		$regex = '~[\s\S]*?([\r\n]+)[\s\S]*~m';
-		$eol = preg_replace( $regex, '$1', $string );
+		$pattern = '~[\s\S]*?([\r\n]+)[\s\S]*~m';
+		$eol = preg_replace( $pattern, '$1', $string );
 		return strlen( $eol ) > 0 ? $eol : PHP_EOL;
 	}
 
@@ -60,8 +60,8 @@ trait FilesystemTrait {
 	 * @return boolean
 	 */
 	protected function stringHasStatement( $haystack, $needle ) {
-		$regex = '~^\s*(' . preg_quote( $needle, '~' ) . ')\s*$~m';
-		return (bool) preg_match( $regex, $haystack );
+		$pattern = '~^\s*(' . preg_quote( $needle, '~' ) . ')\s*$~m';
+		return (bool) preg_match( $pattern, $haystack );
 	}
 
 	/**
