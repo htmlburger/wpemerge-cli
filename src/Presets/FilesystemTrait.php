@@ -6,7 +6,7 @@ trait FilesystemTrait {
 	/**
 	 * Join path pieces with appropriate directory separator.
 	 *
-	 * @param  string ...$path
+	 * @param  string ,...$path
 	 * @return string
 	 */
 	protected function path() {
