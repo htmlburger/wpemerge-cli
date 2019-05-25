@@ -23,7 +23,7 @@ class $name {
 		// or validate request parameters etc.
 		\$foo = 'foobar';
 
-		return app_view( \$view )
+		return \WPEmerge\view( \$view )
 			->with( [
 				'foo' => \$foo,
 			] );
