@@ -14,7 +14,7 @@ class Facade extends Template {
 
 namespace App\\$namespace;
 
-use WPEmerge\Support\Facade;
+use WPEmerge\\Support\\Facade;
 
 class $name extends Facade {
 	protected static function getFacadeAccessor() {

@@ -24,7 +24,12 @@ abstract class Template {
 	 * @return string
 	 */
 	public function storeOnDisc( $name, $namespace, $contents, $directory ) {
-		$filepath = implode( DIRECTORY_SEPARATOR, [$directory, 'app', 'src', $namespace, $name . '.php'] );
+		$namespace_pieces = explode( '\\', $namespace );
+		$filepath = implode( DIRECTORY_SEPARATOR, array_merge(
+			[$directory, 'app', 'src'],
+			$namespace_pieces,
+			[$name . '.php']
+		) );
 
 		if ( file_exists( $filepath ) ) {
 			throw new InvalidArgumentException( 'Class file already exists (' . $filepath . ')' );
