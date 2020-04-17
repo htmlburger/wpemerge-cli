@@ -85,6 +85,8 @@ class App_Tests_Bootstrap {
 		if ( ! is_array( $wp->query_vars ) ) {
 			$wp->query_vars = array();
 		}
+
+		require_once $this->theme_directory . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'App.php';
 	}
 }
 
