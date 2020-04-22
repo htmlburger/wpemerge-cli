@@ -7,6 +7,7 @@ $autoloaders = [
 	dirname( dirname( __DIR__ ) ) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php',
 	dirname( dirname( dirname( __DIR__ ) ) ) . DIRECTORY_SEPARATOR . 'autoload.php',
 	dirname( __DIR__ ) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php',
+	getcwd() . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php',
 ];
 
 foreach ( $autoloaders as $autoloader ) {

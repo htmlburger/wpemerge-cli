@@ -25,8 +25,8 @@
         "email": "wordpress@htmlburger.com"
     },
     "require": {
-        "symfony/console": "^3.4",
-        "symfony/process": "^3.4"
+        "symfony/console": "^3.4 | ^4",
+        "symfony/process": "^3.4 | ^4"
     },
     "autoload": {
         "psr-4": {
