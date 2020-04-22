@@ -8,7 +8,6 @@ use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\Input;
-use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\Output;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -59,104 +58,6 @@ class App {
 		static::decorateOutput( $output );
 
 		$application->run( $input, $output );
-	}
-
-	/**
-	 * Run with the install command.
-	 *
-	 * @param  Event $event
-	 * @return void
-	 */
-	public static function install( Event $event ) {
-		$binary_name = 'wpemerge';
-		$binary = dirname( __DIR__ ) . DIRECTORY_SEPARATOR . 'bin' . DIRECTORY_SEPARATOR . $binary_name;
-
-		$event->getIO()->write( '' );
-
-		$process = new Process( $binary . ' install' );
-		$process->setTimeout( null );
-
-		try {
-			$process->setTty( true );
-
-			$process->run( function ( $type, $line ) use ( $event ) {
-				$event->getIO()->write( $line );
-			});
-		} catch ( RuntimeException $e ) {
-			$event->getIO()->write( '<error>' . $e->getMessage() . '</error>' );
-			$event->getIO()->write( '' );
-			$event->getIO()->write( 'Use <comment>./vendor/bin/' . $binary_name . ' install</comment> instead.' );
-		}
-	}
-
-	/**
-	 * Create a config.json in the theme root directory.
-	 *
-	 * @param  Event $event
-	 * @return void
-	 */
-	public static function createConfigJson( Event $event ) {
-		if ( ! defined( 'WPEMERGE_CLI_DIR' ) ) {
-			define( 'WPEMERGE_CLI_DIR', dirname( __DIR__ ) );
-		}
-
-		$input = new ArrayInput( [ 'config:create' ] );
-		$output = new BufferedOutput();
-
-		try {
-			$application = static::create();
-			$command = $application->find('config:create');
-			$command->run( $input, $output );
-			$event->getIO()->write( $output->fetch() );
-		} catch ( RuntimeException $e ) {
-			$event->getIO()->write( '<error>' . $e->getMessage() . '</error>' );
-		}
-	}
-
-	/**
-	 * Install dependencies in the theme root directory.
-	 *
-	 * @param  Event $event
-	 * @return void
-	 */
-	public static function installDependencies( Event $event ) {
-		if ( ! defined( 'WPEMERGE_CLI_DIR' ) ) {
-			define( 'WPEMERGE_CLI_DIR', dirname( __DIR__ ) );
-		}
-
-		$input = new ArrayInput( [ 'install:dependencies' ] );
-		$output = new ConsoleOutput();
-
-		try {
-			$application = static::create();
-			$command = $application->find('install:dependencies');
-			$command->run( $input, $output );
-		} catch ( RuntimeException $e ) {
-			$event->getIO()->write( '<error>' . $e->getMessage() . '</error>' );
-		}
-	}
-
-	/**
-	 * Build assets in the theme root directory.
-	 *
-	 * @param  Event $event
-	 * @return void
-	 */
-	public static function buildAssets( Event $event ) {
-		if ( ! defined( 'WPEMERGE_CLI_DIR' ) ) {
-			define( 'WPEMERGE_CLI_DIR', dirname( __DIR__ ) );
-		}
-
-		$input = new ArrayInput( [ 'assets:build' ] );
-		$output = new ConsoleOutput();
-
-		try {
-			$application = static::create();
-			$command = $application->find('assets:build');
-			$command->run( $input, $output );
-		} catch ( RuntimeException $e ) {
-			$event->getIO()->write( '<error>' . $e->getMessage() . '</error>' );
-		}
 	}
 
 	/**
