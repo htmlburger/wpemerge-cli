@@ -14,13 +14,13 @@ class ExampleTest extends WP_UnitTestCase {
 	 */
 	public function setUp() {
 		// Set up an App instance with whatever stubs and mocks we need before every test.
-		App::make()->bootstrap( [], false );
+		\App::make()->bootstrap( [], false );
 
 		// Since we don't want to test WP Emerge internals, we can overwrite them during testing:
-		// App::alias( 'view', function ( $view ) { return $view; } );
+		// \App::alias( 'view', function ( $view ) { return $view; } );
 
 		// or we can replace the entire app instance:
-		// App::setApplication( new MyMockApplication() );
+		// \App::setApplication( new MyMockApplication() );
 	}
 
 
@@ -28,7 +28,7 @@ class ExampleTest extends WP_UnitTestCase {
 	 * Tear down our test App instance.
 	 */
 	public function tearDown() {
-		App::setApplication( null );
+		\App::setApplication( null );
 	}
 
 	/**
