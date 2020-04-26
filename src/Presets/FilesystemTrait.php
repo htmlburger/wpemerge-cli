@@ -30,7 +30,7 @@ trait FilesystemTrait {
 
 			$directory = dirname( $destination );
 			if ( ! file_exists( $directory ) ) {
-				mkdir( $directory );
+				mkdir( $directory, 0777, true );
 			}
 
 			copy( $source, $destination );
