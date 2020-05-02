@@ -18,15 +18,23 @@ class Controller extends Template {
 namespace MyTheme\\$namespace;
 
 use WPEmerge\\Requests\\Request;
+use WPEmerge\\View\\ViewInterface;
 
 class $basename {
+	/**
+	 * Handle the index page.
+	 *
+	 * @param Request        \$request
+	 * @param string         \$view
+	 * @return ViewInterface
+	 */
 	public function index( Request \$request, \$view ) {
 		// Add back-end logic here
 		// for example, prepare some variables to pass to the view
 		// or validate request parameters etc.
 		\$foo = 'foobar';
 
-		return \\WPEmerge\\view( \$view )
+		return \\MyTheme::view( \$view )
 			->with( [
 				'foo' => \$foo,
 			] );

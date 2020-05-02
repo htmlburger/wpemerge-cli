@@ -22,6 +22,7 @@ use WPEmerge\Cli\Commands\InstallDependencies;
 use WPEmerge\Cli\Commands\InstallFontAwesome;
 use WPEmerge\Cli\Commands\InstallPhpTests;
 use WPEmerge\Cli\Commands\MakeController;
+use WPEmerge\Cli\Commands\MakeServiceProvider;
 use WPEmerge\Cli\Commands\MakeViewComposer;
 use WPEmerge\Cli\Composer\Composer;
 
@@ -76,6 +77,7 @@ class App {
 		$application->add( new InstallFontAwesome() );
 		$application->add( new InstallPhpTests() );
 		$application->add( new MakeController() );
+		$application->add( new MakeServiceProvider() );
 		$application->add( new MakeViewComposer() );
 
 		return $application;

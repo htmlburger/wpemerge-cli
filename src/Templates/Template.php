@@ -35,6 +35,10 @@ abstract class Template {
 			throw new InvalidArgumentException( 'Class file already exists (' . $filepath . ')' );
 		}
 
+		if ( ! file_exists( dirname( $filepath ) ) ) {
+			mkdir( dirname( $filepath ), 0777, true );
+		}
+
 		file_put_contents( $filepath, $contents );
 
 		return $filepath;

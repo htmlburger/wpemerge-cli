@@ -14,7 +14,15 @@ class ViewComposer extends Template {
 
 namespace MyTheme\\$namespace;
 
+use WPEmerge\\View\\ViewInterface;
+
 class $name {
+	/**
+	 * Compose a view.
+	 *
+	 * @param  ViewInterface \$view
+	 * @return void
+	 */
 	public function compose( \$view ) {
 		\$view->with( [
 			'foo' => 'bar',
