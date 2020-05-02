@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests;
+namespace MyTheme\Tests;
 
 class App_Tests_Bootstrap {
 	/**

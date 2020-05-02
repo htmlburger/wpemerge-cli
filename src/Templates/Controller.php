@@ -15,7 +15,7 @@ class Controller extends Template {
 		$contents = <<<EOT
 <?php
 
-namespace App\\$namespace;
+namespace MyTheme\\$namespace;
 
 use WPEmerge\\Requests\\Request;
 

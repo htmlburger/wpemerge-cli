@@ -12,7 +12,7 @@ class ViewComposer extends Template {
 		$contents = <<<EOT
 <?php
 
-namespace App\\$namespace;
+namespace MyTheme\\$namespace;
 
 class $name {
 	public function compose( \$view ) {

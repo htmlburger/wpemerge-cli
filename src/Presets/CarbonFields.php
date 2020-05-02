@@ -56,7 +56,7 @@ class CarbonFields implements PresetInterface {
 			$output->writeln( '<failure>File ' . $destination . ' already exists - skipped.</failure>' );
 		}
 
-		$output->writeln( '<comment>Please add \\App\\CarbonFields\\CarbonFieldsServiceProvider::class to your providers array.</comment>' );
+		$output->writeln( '<comment>Please add \\MyTheme\\CarbonFields\\CarbonFieldsServiceProvider::class to your providers array.</comment>' );
 	}
 
 	/**

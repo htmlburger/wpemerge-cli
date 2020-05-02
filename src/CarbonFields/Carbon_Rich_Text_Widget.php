@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Widgets;
+namespace MyTheme\Widgets;
 
 use Carbon_Fields\Widget\Widget;
 use Carbon_Fields\Field\Field;
@@ -15,11 +15,11 @@ class Carbon_Rich_Text_Widget extends Widget {
 	public function __construct() {
 		$this->setup(
 			'rich_text',
-			__( 'Rich Text', 'app' ),
-			__( 'Displays a block with title and WYSIWYG content.', 'app' ),
+			__( 'Rich Text', 'mytheme' ),
+			__( 'Displays a block with title and WYSIWYG content.', 'mytheme' ),
 			array(
-				Field::make( 'text', 'title', __( 'Title', 'app' ) ),
-				Field::make( 'rich_text', 'content', __( 'Content', 'app' ) ),
+				Field::make( 'text', 'title', __( 'Title', 'mytheme' ) ),
+				Field::make( 'rich_text', 'content', __( 'Content', 'mytheme' ) ),
 			)
 		);
 	}
