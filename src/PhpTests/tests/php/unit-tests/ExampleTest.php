@@ -9,10 +9,10 @@ use WP_UnitTestCase;
  */
 class ExampleTest extends WP_UnitTestCase {
 	/**
-	 * Set up a new App instance to use for tests.
+	 * Set up a new app instance to use for tests.
 	 */
 	public function setUp() {
-		// Set up an App instance with whatever stubs and mocks we need before every test.
+		// Set up an app instance with whatever stubs and mocks we need before every test.
 		\MyTheme::make()->bootstrap( [], false );
 
 		// Since we don't want to test WP Emerge internals, we can overwrite them during testing:
@@ -24,7 +24,7 @@ class ExampleTest extends WP_UnitTestCase {
 
 
 	/**
-	 * Tear down our test App instance.
+	 * Tear down our test app instance.
 	 */
 	public function tearDown() {
 		\MyTheme::setApplication( null );

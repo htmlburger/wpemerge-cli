@@ -8,7 +8,7 @@ Install WordPress and the WP Unit Test lib using the `install.sh` script. Change
 
 Sample usage:
 
-    $ ./tests/php/bin/install.sh wpemergetheme_tests root root localhost 4.8
+    $ ./tests/php/bin/install.sh mytheme_tests root root localhost 4.8
 
 **Important**: Make sure that the `<db-name>` database has been created. All data in that database will be removed during testing.
 

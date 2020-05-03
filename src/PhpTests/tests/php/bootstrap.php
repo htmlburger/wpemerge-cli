@@ -2,11 +2,11 @@
 
 namespace MyTheme\Tests;
 
-class App_Tests_Bootstrap {
+class MyTheme_Tests_Bootstrap {
 	/**
 	 * The bootstrap instance.
 	 *
-	 * @var App_Tests_Bootstrap
+	 * @var MyTheme_Tests_Bootstrap
 	 */
 	protected static $instance = null;
 
@@ -34,7 +34,7 @@ class App_Tests_Bootstrap {
 	/**
 	 * Get the single tests bootstrap instance.
 	 *
-	 * @return App_Tests_Bootstrap
+	 * @return MyTheme_Tests_Bootstrap
 	 */
 	public static function instance() {
 		if ( static::$instance === null ) {
@@ -86,8 +86,8 @@ class App_Tests_Bootstrap {
 			$wp->query_vars = array();
 		}
 
-		require_once $this->theme_directory . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'App.php';
+		require_once $this->theme_directory . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'MyTheme.php';
 	}
 }
 
-App_Tests_Bootstrap::instance()->bootstrap();
+MyTheme_Tests_Bootstrap::instance()->bootstrap();
