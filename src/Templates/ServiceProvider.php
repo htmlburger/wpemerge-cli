@@ -14,7 +14,7 @@ class ServiceProvider extends Template {
 		$contents = <<<EOT
 <?php
 
-namespace MyTheme\\$namespace;
+namespace MyApp\\$namespace;
 
 use WPEmerge\\ServiceProviders\ServiceProviderInterface;
 

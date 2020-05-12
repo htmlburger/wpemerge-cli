@@ -17,8 +17,8 @@ class InstallDependencies extends Command {
 	protected function configure() {
 		$this
 			->setName( 'install:dependencies' )
-			->setDescription( 'Install theme Node dependencies.' )
-			->setHelp( 'Installs all required Node dependencies for theme development.' );
+			->setDescription( 'Install Node dependencies.' )
+			->setHelp( 'Installs all required Node dependencies.' );
 	}
 
 	/**

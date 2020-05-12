@@ -20,8 +20,8 @@ class Install extends Command {
 	protected function configure() {
 		$this
 			->setName( 'install' )
-			->setDescription( 'Interactively install theme options.' )
-			->setHelp( 'Provides a number of choices on how to decorate your WP Emerge Theme.' );
+			->setDescription( 'Interactively install options.' )
+			->setHelp( 'Provides a number of choices on how to decorate your WP Emerge project.' );
 	}
 
 	/**

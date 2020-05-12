@@ -37,7 +37,7 @@ trait FrontEndPresetTrait {
 	 * @return void
 	 */
 	protected function addCssVendorImport( $directory, $import ) {
-		$filepath = $this->path( $directory, 'resources', 'styles', 'theme', '_vendor.scss' );
+		$filepath = $this->path( $directory, 'resources', 'styles', 'frontend', '_vendor.scss' );
 		$statement = "@import '~$import';";
 
 		$this->appendUniqueStatement( $filepath, $statement );
@@ -51,7 +51,7 @@ trait FrontEndPresetTrait {
 	 * @return void
 	 */
 	protected function addJsVendorImport( $directory, $import ) {
-		$filepath = $this->path( $directory, 'resources', 'scripts', 'theme', 'vendor.js' );
+		$filepath = $this->path( $directory, 'resources', 'scripts', 'frontend', 'vendor.js' );
 		$statement = "import '$import';";
 
 		$this->appendUniqueStatement( $filepath, $statement );

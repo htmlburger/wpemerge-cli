@@ -17,8 +17,8 @@ class AssetsBuild extends Command {
 	protected function configure() {
 		$this
 			->setName( 'assets:build' )
-			->setDescription( 'Build theme assets.' )
-			->setHelp( 'Builds all theme assets.' );
+			->setDescription( 'Build project assets.' )
+			->setHelp( 'Builds all project assets.' );
 	}
 
 	/**

@@ -23,18 +23,18 @@ class TailwindCss implements PresetInterface {
 		$this->installNodePackage( $directory, $output, 'tailwindcss', '^1.1.2' );
 
 		$tailwind_scss_filepath = $this->path( WPEMERGE_CLI_DIR, 'src', 'TailwindCss', 'tailwind.scss' );
-		$index_scss_filepath = $this->path( $directory, 'resources', 'styles', 'theme', 'index.scss' );
+		$index_scss_filepath = $this->path( $directory, 'resources', 'styles', 'frontend', 'index.scss' );
 		$this->appendUniqueStatement( $index_scss_filepath, file_get_contents( $tailwind_scss_filepath ) );
 
 		$postcss_js_filepath = $this->path( $directory, 'resources', 'build', 'postcss.js' );
 		$this->enablePreset( $postcss_js_filepath, 'Tailwind CSS' );
 
-		$components_dir = $this->path( $directory, 'resources', 'styles', 'theme', 'components' );
+		$components_dir = $this->path( $directory, 'resources', 'styles', 'frontend', 'components' );
 		if ( ! file_exists( $components_dir ) ) {
 			mkdir( $components_dir );
 		}
 
-		$utilities_dir = $this->path( $directory, 'resources', 'styles', 'theme', 'utilities' );
+		$utilities_dir = $this->path( $directory, 'resources', 'styles', 'frontend', 'utilities' );
 		if ( ! file_exists( $utilities_dir ) ) {
 			mkdir( $utilities_dir );
 		}

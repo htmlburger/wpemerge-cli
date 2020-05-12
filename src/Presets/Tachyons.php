@@ -22,7 +22,7 @@ class Tachyons implements PresetInterface {
 
 		$this->copy([
 			$this->path( WPEMERGE_CLI_DIR, 'src', 'Tachyons', 'tachyons.js' )
-			=> $this->path( $directory, 'resources', 'scripts', 'theme', 'vendor', 'tachyons.js' ),
+			=> $this->path( $directory, 'resources', 'scripts', 'frontend', 'vendor', 'tachyons.js' ),
 		]);
 	}
 }

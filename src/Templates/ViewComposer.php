@@ -12,7 +12,7 @@ class ViewComposer extends Template {
 		$contents = <<<EOT
 <?php
 
-namespace MyTheme\\$namespace;
+namespace MyApp\\$namespace;
 
 use WPEmerge\\View\\ViewInterface;
 

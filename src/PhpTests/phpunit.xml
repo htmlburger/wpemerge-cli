@@ -11,7 +11,7 @@
 	backupGlobals="false"
 	>
 	<testsuites>
-		<testsuite name="WP Emerge Theme Test Suite">
+		<testsuite name="WP Emerge Test Suite">
 			<directory suffix=".php">./tests/php/unit-tests/</directory>
 		</testsuite>
 	</testsuites>

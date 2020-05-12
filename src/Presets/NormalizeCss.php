@@ -22,7 +22,7 @@ class NormalizeCss implements PresetInterface {
 
 		$this->copy([
 			$this->path( WPEMERGE_CLI_DIR, 'src', 'NormalizeCss', 'normalizecss.js' )
-			=> $this->path( $directory, 'resources', 'scripts', 'theme', 'vendor', 'normalizecss.js' ),
+			=> $this->path( $directory, 'resources', 'scripts', 'frontend', 'vendor', 'normalizecss.js' ),
 		]);
 	}
 }

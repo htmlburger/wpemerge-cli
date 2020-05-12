@@ -22,7 +22,7 @@ class Foundation implements PresetInterface {
 
 		$this->copy([
 			$this->path( WPEMERGE_CLI_DIR, 'src', 'Foundation', 'foundation.js' )
-			=> $this->path( $directory, 'resources', 'scripts', 'theme', 'vendor', 'foundation.js' ),
+			=> $this->path( $directory, 'resources', 'scripts', 'frontend', 'vendor', 'foundation.js' ),
 		]);
 	}
 }

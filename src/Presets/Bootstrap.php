@@ -23,7 +23,7 @@ class Bootstrap implements PresetInterface {
 
 		$this->copy([
 			$this->path( WPEMERGE_CLI_DIR, 'src', 'Bootstrap', 'bootstrap.js' )
-				=> $this->path( $directory, 'resources', 'scripts', 'theme', 'vendor', 'bootstrap.js' ),
+				=> $this->path( $directory, 'resources', 'scripts', 'frontend', 'vendor', 'bootstrap.js' ),
 		]);
 	}
 }

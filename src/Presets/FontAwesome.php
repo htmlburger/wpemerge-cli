@@ -22,7 +22,7 @@ class FontAwesome implements PresetInterface {
 
 		$this->copy([
 			$this->path( WPEMERGE_CLI_DIR, 'src', 'FontAwesome', 'fontawesome.js' )
-			=> $this->path( $directory, 'resources', 'scripts', 'theme', 'vendor', 'fontawesome.js' ),
+			=> $this->path( $directory, 'resources', 'scripts', 'frontend', 'vendor', 'fontawesome.js' ),
 		]);
 	}
 }

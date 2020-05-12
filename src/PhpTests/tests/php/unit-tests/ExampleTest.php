@@ -1,11 +1,11 @@
 <?php
 
-namespace MyTheme\Tests;
+namespace MyApp\Tests;
 
 use WP_UnitTestCase;
 
 /**
- * @coversDefaultClass \MyTheme\Controllers\Web\ExampleController
+ * @coversDefaultClass \MyApp\Controllers\Web\ExampleController
  */
 class ExampleTest extends WP_UnitTestCase {
 	/**
@@ -13,13 +13,13 @@ class ExampleTest extends WP_UnitTestCase {
 	 */
 	public function setUp() {
 		// Set up an app instance with whatever stubs and mocks we need before every test.
-		\MyTheme::make()->bootstrap( [], false );
+		\MyApp::make()->bootstrap( [], false );
 
 		// Since we don't want to test WP Emerge internals, we can overwrite them during testing:
-		// \MyTheme::alias( 'view', function ( $view ) { return $view; } );
+		// \MyApp::alias( 'view', function ( $view ) { return $view; } );
 
 		// or we can replace the entire app instance:
-		// \MyTheme::setApplication( new MyMockApplication() );
+		// \MyApp::setApplication( new MyMockApplication() );
 	}
 
 
@@ -27,7 +27,7 @@ class ExampleTest extends WP_UnitTestCase {
 	 * Tear down our test app instance.
 	 */
 	public function tearDown() {
-		\MyTheme::setApplication( null );
+		\MyApp::setApplication( null );
 	}
 
 	/**

@@ -22,7 +22,7 @@ class Bulma implements PresetInterface {
 
 		$this->copy([
 			$this->path( WPEMERGE_CLI_DIR, 'src', 'Bulma', 'bulma.js' )
-			=> $this->path( $directory, 'resources', 'scripts', 'theme', 'vendor', 'bulma.js' ),
+			=> $this->path( $directory, 'resources', 'scripts', 'frontend', 'vendor', 'bulma.js' ),
 		]);
 	}
 }

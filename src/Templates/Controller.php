@@ -15,7 +15,7 @@ class Controller extends Template {
 		$contents = <<<EOT
 <?php
 
-namespace MyTheme\\$namespace;
+namespace MyApp\\$namespace;
 
 use WPEmerge\\Requests\\Request;
 use WPEmerge\\View\\ViewInterface;
@@ -34,7 +34,7 @@ class $basename {
 		// or validate request parameters etc.
 		\$foo = 'foobar';
 
-		return \\MyTheme::view( \$view )
+		return \\MyApp::view( \$view )
 			->with( [
 				'foo' => \$foo,
 			] );

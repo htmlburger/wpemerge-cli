@@ -1,6 +1,6 @@
 <?php
 
-namespace MyTheme\CarbonFields;
+namespace MyApp\CarbonFields;
 
 use Carbon_Fields\Container\Container;
 use Carbon_Fields\Field\Field;
@@ -63,12 +63,12 @@ class CarbonFieldsServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	protected function registerThemeOptions() {
-		Container::make( 'theme_options', __( 'Theme Options', 'mytheme' ) )
-			->set_page_file( 'mytheme-theme-options.php' )
+		Container::make( 'theme_options', __( 'Theme Options', 'myapp' ) )
+			->set_page_file( 'myapp-theme-options.php' )
 			->add_fields( array(
-				Field::make( 'text', 'crb_google_maps_api_key', __( 'Google Maps API Key', 'mytheme' ) ),
-				Field::make( 'header_scripts', 'crb_header_script', __( 'Header Script', 'mytheme' ) ),
-				Field::make( 'footer_scripts', 'crb_footer_script', __( 'Footer Script', 'mytheme' ) ),
+				Field::make( 'text', 'crb_google_maps_api_key', __( 'Google Maps API Key', 'myapp' ) ),
+				Field::make( 'header_scripts', 'crb_header_script', __( 'Header Script', 'myapp' ) ),
+				Field::make( 'footer_scripts', 'crb_footer_script', __( 'Footer Script', 'myapp' ) ),
 			) );
 	}
 
@@ -79,7 +79,7 @@ class CarbonFieldsServiceProvider implements ServiceProviderInterface {
 	 */
 	protected function registerPostMeta() {
 		/*
-		Container::make( 'post_meta', __( 'Custom Data', 'mytheme' ) )
+		Container::make( 'post_meta', __( 'Custom Data', 'myapp' ) )
 			->where( 'post_type', '=', 'page' )
 			->add_fields( array(
 				Field::make( 'complex', 'crb_my_data' )
@@ -102,7 +102,7 @@ class CarbonFieldsServiceProvider implements ServiceProviderInterface {
 	 */
 	protected function registerTermMeta() {
 		/*
-		Container::make( 'term_meta', __( 'Custom Data', 'mytheme' ) )
+		Container::make( 'term_meta', __( 'Custom Data', 'myapp' ) )
 			->where( 'term_taxonomy', '=', 'category' )
 			->add_fields( array(
 				Field::make( 'image', 'crb_img' ),
@@ -117,7 +117,7 @@ class CarbonFieldsServiceProvider implements ServiceProviderInterface {
 	 */
 	protected function registerUserMeta() {
 		/*
-		Container::make( 'user_meta', __( 'Custom Data', 'mytheme' ) )
+		Container::make( 'user_meta', __( 'Custom Data', 'myapp' ) )
 			->add_fields( array(
 				Field::make( 'image', 'crb_img' ),
 			));
@@ -130,6 +130,6 @@ class CarbonFieldsServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function registerWidgets() {
-		register_widget( \MyTheme\Widgets\Carbon_Rich_Text_Widget::class );
+		register_widget( \MyApp\Widgets\Carbon_Rich_Text_Widget::class );
 	}
 }
