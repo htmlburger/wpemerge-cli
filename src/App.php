@@ -47,8 +47,8 @@ class App {
 			$output = new ConsoleOutput();
 		}
 
-		if ( ! static::isWordPressThemeDirectory( getcwd() ) ) {
-			$application->renderException( new RuntimeException( 'Commands must be called from the root of a WordPress theme.' ), $output );
+		if ( ! static::isValidDirectory( getcwd() ) ) {
+			$application->renderException( new RuntimeException( 'Commands must be called from the root of a WordPress theme or plugin.' ), $output );
 			return;
 		}
 
@@ -99,14 +99,16 @@ class App {
 	 * @param  string  $directory
 	 * @return boolean
 	 */
-	protected static function isWordPressThemeDirectory( $directory ) {
+	protected static function isValidDirectory( $directory ) {
 		$composer = Composer::getComposerJson( $directory );
 
 		if ( ! $composer ) {
 			return false;
 		}
 
-		if ( $composer['type'] !== 'wordpress-theme' ) {
+		$type = isset( $composer['type'] ) ? $composer['type'] : '';
+
+		if ( $type !== 'wordpress-theme' && $type !== 'wordpress-plugin' ) {
 			return false;
 		}
 
