@@ -94,7 +94,7 @@ class App {
 	}
 
 	/**
-	 * Check if a directory is a WordPress theme root.
+	 * Check if a directory is a valid WordPress theme or plugin root.
 	 *
 	 * @param  string  $directory
 	 * @return boolean

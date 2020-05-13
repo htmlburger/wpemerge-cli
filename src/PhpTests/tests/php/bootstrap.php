@@ -18,11 +18,11 @@ class MyApp_Tests_Bootstrap {
 	public $wp_tests_directory;
 
 	/**
-	 * Theme directory.
+	 * App directory.
 	 *
 	 * @var string
 	 */
-	public $theme_directory;
+	public $app_directory;
 
 	/**
 	 * Testing directory.
@@ -51,7 +51,7 @@ class MyApp_Tests_Bootstrap {
 		ini_set( 'display_errors','on' );
 		error_reporting( E_ALL );
 
-		$this->theme_directory = dirname( dirname( __DIR__ ) );
+		$this->app_directory = dirname( dirname( __DIR__ ) );
 		$this->tests_directory = __DIR__;
 		$this->wp_tests_directory = $this->tests_directory . '/environment/wordpress-tests-lib';
 
@@ -64,7 +64,7 @@ class MyApp_Tests_Bootstrap {
 	 * Load the plugin.
 	 */
 	public function load_plugin() {
-		require_once $this->theme_directory . '/vendor/autoload.php';
+		require_once $this->app_directory . '/vendor/autoload.php';
 	}
 
 	/**
@@ -86,7 +86,7 @@ class MyApp_Tests_Bootstrap {
 			$wp->query_vars = array();
 		}
 
-		require_once $this->theme_directory . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'MyApp.php';
+		require_once $this->app_directory . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'MyApp.php';
 	}
 }
 

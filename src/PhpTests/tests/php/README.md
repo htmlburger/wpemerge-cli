@@ -2,7 +2,7 @@
 
 ## Initial Setup
 
-Install WordPress and the WP Unit Test lib using the `install.sh` script. Change to the theme/plugin root directory and run:
+Install WordPress and the WP Unit Test lib using the `install.sh` script. Change to the theme or plugin root directory and run:
 
     $ ./tests/php/bin/install.sh <db-name> <db-user> <db-password> [db-host] [wp-version]
 
