@@ -28,5 +28,7 @@ class InstallDependencies extends Command {
 		$package_manager = new Proxy();
 
 		$package_manager->installAll( getcwd(), $output );
+
+		return 0;
 	}
 }

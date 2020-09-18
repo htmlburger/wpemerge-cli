@@ -78,5 +78,7 @@ class InstallCssFramework extends Command {
 		}
 
 		$preset->execute( getcwd(), $output );
+
+		return 0;
 	}
 }

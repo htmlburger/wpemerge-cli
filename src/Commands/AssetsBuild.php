@@ -28,5 +28,7 @@ class AssetsBuild extends Command {
 		$package_manager = new Proxy();
 
 		$package_manager->run( getcwd(), $output, 'build' );
+
+		return 0;
 	}
 }

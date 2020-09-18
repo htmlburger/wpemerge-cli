@@ -37,5 +37,7 @@ class CreateConfigJson extends Command {
 		}
 
 		copy( $source, $target );
+
+		return 0;
 	}
 }

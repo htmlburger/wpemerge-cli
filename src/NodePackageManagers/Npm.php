@@ -12,7 +12,7 @@ class Npm implements NodePackageManagerInterface {
 	 * {@inheritDoc}
 	 */
 	public function installed( $directory, $package ) {
-		$command = 'npm list ' . escapeshellarg( $package ) . ' --json';
+		$command = ['npm', 'list', $package, '--json'];
 
 		try {
 			$output = App::execute( $command, $directory );
@@ -37,9 +37,12 @@ class Npm implements NodePackageManagerInterface {
 	 * {@inheritDoc}
 	 */
 	public function install( $directory, OutputInterface $output, $package, $version = null, $dev = false ) {
-		$command = 'npm install ' .
-			'"' . $package . ( $version !== null ? '@' . $version : '' ) . '"' .
-			( $dev ? ' --only=dev' : '' );
+		$command = array_filter( [
+			'npm',
+			'install',
+			$package . ( $version !== null ? '@' . $version : '' ),
+			( $dev ? '--only=dev' : '' ),
+		] );
 
 		App::liveExecute( $command, $output, $directory, 600 );
 	}
@@ -48,9 +51,12 @@ class Npm implements NodePackageManagerInterface {
 	 * {@inheritDoc}
 	 */
 	public function uninstall( $directory, OutputInterface $output, $package, $dev = false ) {
-		$command = 'npm uninstall ' .
-			escapeshellarg( $package ) .
-			( $dev ? ' --only=dev' : '' );
+		$command = array_filter( [
+			'npm',
+			'uninstall',
+			$package,
+			( $dev ? '--only=dev' : '' ),
+		] );
 
 		App::liveExecute( $command, $output, $directory, 600 );
 	}
@@ -59,7 +65,7 @@ class Npm implements NodePackageManagerInterface {
 	 * {@inheritDoc}
 	 */
 	public function installAll( $directory, OutputInterface $output ) {
-		$command = 'npm install';
+		$command = ['npm', 'install'];
 
 		App::liveExecute( $command, $output, $directory, 600 );
 	}
@@ -68,7 +74,7 @@ class Npm implements NodePackageManagerInterface {
 	 * {@inheritDoc}
 	 */
 	public function run( $directory, OutputInterface $output, $script ) {
-		$command = 'npm run ' . $script;
+		$command = ['npm', 'run', $script];
 
 		App::liveExecute( $command, $output, $directory, 600 );
 	}

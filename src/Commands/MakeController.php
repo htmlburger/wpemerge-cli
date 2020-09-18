@@ -44,5 +44,7 @@ class MakeController extends Command {
 
 		$output->writeln( 'Controller created successfully:' );
 		$output->writeln( '<info>' . $filepath . '</info>' );
+
+		return 0;
 	}
 }

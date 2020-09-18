@@ -11,7 +11,7 @@ class Yarn implements NodePackageManagerInterface {
 	 * {@inheritDoc}
 	 */
 	public function installed( $directory, $package ) {
-		$command = 'yarn list ' . escapeshellarg( $package ) . ' --depth=0 --json';
+		$command = ['yarn', 'list', $package, '--depth=0', '--json'];
 
 		$output = App::execute( $command, $directory );
 		$json = @json_decode( trim( $output ), true );
@@ -31,9 +31,12 @@ class Yarn implements NodePackageManagerInterface {
 	 * {@inheritDoc}
 	 */
 	public function install( $directory, OutputInterface $output, $package, $version = null, $dev = false ) {
-		$command = 'yarn add ' .
-			'"' . $package . ( $version !== null ? '@' . $version : '' ) . '"' .
-			( $dev ? ' --dev' : '' );
+		$command = array_filter( [
+			'yarn',
+			'add',
+			$package . ( $version !== null ? '@' . $version : '' ),
+			( $dev ? '--dev' : '' ),
+		] );
 
 		App::liveExecute( $command, $output, $directory, 600 );
 	}
@@ -42,9 +45,12 @@ class Yarn implements NodePackageManagerInterface {
 	 * {@inheritDoc}
 	 */
 	public function uninstall( $directory, OutputInterface $output, $package, $dev = false ) {
-		$command = 'yarn remove ' .
-			escapeshellarg( $package ) .
-			( $dev ? ' --dev' : '' );
+		$command = array_filter( [
+			'yarn',
+			'remove',
+			$package,
+			( $dev ? '--dev' : '' ),
+		] );
 
 		App::liveExecute( $command, $output, $directory, 600 );
 	}
@@ -53,7 +59,7 @@ class Yarn implements NodePackageManagerInterface {
 	 * {@inheritDoc}
 	 */
 	public function installAll( $directory, OutputInterface $output ) {
-		$command = 'yarn install';
+		$command = ['yarn', 'install'];
 
 		App::liveExecute( $command, $output, $directory, 600 );
 	}
@@ -62,7 +68,7 @@ class Yarn implements NodePackageManagerInterface {
 	 * {@inheritDoc}
 	 */
 	public function run( $directory, OutputInterface $output, $script ) {
-		$command = 'yarn run ' . $script;
+		$command = ['yarn', 'run', $script];
 
 		App::liveExecute( $command, $output, $directory, 600 );
 	}

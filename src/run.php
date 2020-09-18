@@ -17,4 +17,8 @@ foreach ( $autoloaders as $autoloader ) {
 	}
 }
 
+if ( ! class_exists( \WPEmerge\Cli\App::class ) ) {
+	throw new Exception( 'Could not load WP Emerge CLI library.' );
+}
+
 \WPEmerge\Cli\App::run();

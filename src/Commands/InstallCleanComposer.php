@@ -37,5 +37,7 @@ class InstallCleanComposer extends Command {
 		unset( $composer['authors'] );
 
 		Composer::storeComposerJson( $composer, $directory );
+
+		return 0;
 	}
 }

@@ -29,5 +29,7 @@ class MakeServiceProvider extends Command {
 
 		$output->writeln( 'Service provider created successfully:' );
 		$output->writeln( '<info>' . $filepath . '</info>' );
+
+		return 0;
 	}
 }

@@ -29,5 +29,7 @@ class MakeViewComposer extends Command {
 
 		$output->writeln( 'View composer created successfully:' );
 		$output->writeln( '<info>' . $filepath . '</info>' );
+
+		return 0;
 	}
 }

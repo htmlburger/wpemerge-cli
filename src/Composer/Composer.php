@@ -49,7 +49,7 @@ class Composer {
 	 * @return boolean
 	 */
 	public static function installed( $directory, $package ) {
-		$command = 'composer show ' . $package . ' -D';
+		$command = ['composer', 'show', $package, '-D'];
 
 		try {
 			App::execute( $command, $directory );
@@ -70,9 +70,12 @@ class Composer {
 	 * @return string
 	 */
 	public static function install( $directory, $package, $version = null, $dev = false ) {
-		$command = 'composer require' .
-			( $dev ? ' --dev' : '' ) .
-			' "' . $package .( $version !== null ? ':' . $version : '' ) . '"';
+		$command = array_filter( [
+			'composer',
+			'require',
+			( $dev ? '--dev' : '' ),
+			$package . ( $version !== null ? ':' . $version : '' ),
+		] );
 
 		$output = App::execute( $command, $directory );
 

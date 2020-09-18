@@ -32,5 +32,7 @@ class InstallCarbonFields extends Command {
 
 		$preset = new CarbonFields( $version );
 		$preset->execute( getcwd(), $output );
+
+		return 0;
 	}
 }

@@ -48,7 +48,8 @@ class App {
 		}
 
 		if ( ! static::isValidDirectory( getcwd() ) ) {
-			$application->renderException( new RuntimeException( 'Commands must be called from the root of a WordPress theme or plugin.' ), $output );
+			$method = method_exists( $application, 'renderException' ) ? 'renderException' : 'renderThrowable';
+			$application->$method( new RuntimeException( 'Commands must be called from the root of a WordPress theme or plugin.' ), $output );
 			return;
 		}
 
@@ -118,7 +119,7 @@ class App {
 	/**
 	 * Run a shell command.
 	 *
-	 * @param  string      $command
+	 * @param  array       $command
 	 * @param  string|null $directory
 	 * @param  integer     $timeout
 	 * @return string
@@ -136,7 +137,7 @@ class App {
 	/**
 	 * Run a shell command and return the output as it comes in.
 	 *
-	 * @param  string          $command
+	 * @param  array           $command
 	 * @param  OutputInterface $output
 	 * @param  string|null     $directory
 	 * @param  integer         $timeout

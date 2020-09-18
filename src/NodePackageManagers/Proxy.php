@@ -56,7 +56,7 @@ class Proxy implements NodePackageManagerInterface {
 		];
 
 		foreach ( $node_package_managers as $manager => $class ) {
-			$command = $is_windows ? 'where ' . escapeshellarg( $manager ) : 'which ' . escapeshellarg( $manager );
+			$command = $is_windows ? ['where', $manager] : ['which', $manager];
 
 			try {
 				$output = App::execute( $command );

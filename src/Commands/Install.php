@@ -60,6 +60,8 @@ class Install extends Command {
 		if ( $config['install_font_awesome'] ) {
 			$this->installFontAwesome( $input, $output );
 		}
+
+		return 0;
 	}
 
 	/**

@@ -24,5 +24,7 @@ class InstallPhpTests extends Command {
 	protected function execute( InputInterface $input, OutputInterface $output ) {
 		$preset = new PhpTests();
 		$preset->execute( getcwd(), $output );
+
+		return 0;
 	}
 }
