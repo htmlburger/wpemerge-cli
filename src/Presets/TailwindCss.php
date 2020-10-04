@@ -22,9 +22,10 @@ class TailwindCss implements PresetInterface {
 	public function execute( $directory, OutputInterface $output ) {
 		$this->installNodePackage( $directory, $output, 'tailwindcss', '^1.1.2' );
 
-		$tailwind_scss_filepath = $this->path( WPEMERGE_CLI_DIR, 'src', 'TailwindCss', 'tailwind.scss' );
-		$index_scss_filepath = $this->path( $directory, 'resources', 'styles', 'frontend', 'index.scss' );
-		$this->appendUniqueStatement( $index_scss_filepath, file_get_contents( $tailwind_scss_filepath ) );
+		$this->copy([
+			$this->path( WPEMERGE_CLI_DIR, 'src', 'TailwindCss', 'tailwindcss.scss' )
+			=> $this->path( $directory, 'resources', 'styles', 'frontend', 'vendor', 'tailwindcss.scss' ),
+		]);
 
 		$postcss_js_filepath = $this->path( $directory, 'resources', 'build', 'postcss.js' );
 		$this->enablePreset( $postcss_js_filepath, 'Tailwind CSS' );
