@@ -60,10 +60,14 @@ class InstallCssFramework extends Command {
 				$preset = new Tachyons();
 				break;
 
+			case 'Tailwind':
+			case 'TailwindCss':
+			case 'TailwindCSS':
 			case 'Tailwind CSS':
 				$preset = new TailwindCss();
 				break;
 
+			case 'Spectre':
 			case 'Spectre.css':
 				$preset = new Spectre();
 				break;

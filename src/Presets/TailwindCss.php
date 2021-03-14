@@ -20,7 +20,7 @@ class TailwindCss implements PresetInterface {
 	 * {@inheritDoc}
 	 */
 	public function execute( $directory, OutputInterface $output ) {
-		$this->installNodePackage( $directory, $output, 'tailwindcss', '^1.1.2' );
+		$this->installNodePackage( $directory, $output, 'tailwindcss', '^2' );
 
 		$this->copy([
 			$this->path( WPEMERGE_CLI_DIR, 'src', 'TailwindCss', 'tailwindcss.scss' )
